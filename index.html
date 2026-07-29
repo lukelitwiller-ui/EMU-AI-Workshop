@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build a reminder system from a spreadsheet | EMU AI Work Session</title>
+<meta name="description" content="Materials for the EMU faculty and staff AI Work Session, Wednesday, August 19.">
+<link rel="icon" href="assets/emu-logo-color.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --emu-blue:#0056B8;
+  --emu-blue-mid:#1C3767;
+  --emu-blue-dark:#102C52;
+  --emu-blue-light:#E0EDF7;
+  --emu-yellow:#F3A71E;
+  --font-sans:'Source Sans 3','Source Sans Pro',Arial,sans-serif;
+  --font-serif:Georgia,'Times New Roman',serif;
+  --ink:#16202E;
+  --ink-soft:#4E5C6E;
+  --line:#DCE6F2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-sans);font-weight:400;color:var(--ink);background:#fff;line-height:1.68;-webkit-font-smoothing:antialiased}
+.wrap{max-width:840px;margin:0 auto;padding:0 26px}
+
+/* ── bands ─────────────────────────────────────────── */
+.band{padding:52px 0}
+.band-soft{background:var(--emu-blue-light)}
+.band + .band-white{padding-top:52px}
+.band-white{background:#fff}
+
+/* ── header ────────────────────────────────────────── */
+header{background:var(--emu-blue);color:#fff}
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0;flex-wrap:wrap}
+.masthead img{height:42px;width:auto;display:block}
+.masthead .meta{font-size:.92rem;opacity:.92;font-weight:600;letter-spacing:.01em}
+.hero{background:linear-gradient(160deg,var(--emu-blue) 0%,var(--emu-blue-mid) 100%);color:#fff;padding:52px 0 60px}
+.tagline{font-size:.95rem;letter-spacing:.14em;margin:0 0 22px;color:#fff;opacity:.95}
+.tagline .a{font-weight:300}
+.tagline .b{font-weight:700}
+.hero h1{font-size:2.7rem;line-height:1.1;font-weight:700;margin:0 0 16px;letter-spacing:-.01em}
+.hero .lede{font-size:1.17rem;margin:0 0 30px;max-width:54ch;opacity:.95}
+
+/* ── buttons ───────────────────────────────────────── */
+.btn{display:inline-block;font-family:var(--font-sans);font-weight:600;font-size:1rem;border-radius:5px;padding:14px 28px;border:2px solid transparent;cursor:pointer;text-decoration:none;transition:background .16s ease,transform .1s ease,border-color .16s ease,color .16s ease}
+.btn-yellow{background:var(--emu-yellow);color:#3A2600;border-color:var(--emu-yellow)}
+.btn-yellow:hover{background:#E5981A;border-color:#E5981A}
+.btn:active{transform:scale(.985)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn-outline{background:transparent;color:var(--emu-blue);border-color:var(--emu-blue)}
+.btn-outline:hover{background:var(--emu-blue);color:#fff}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* ── stats ─────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:34px 0 0}
+.stat{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16);border-radius:7px;padding:18px 20px}
+.stat .n{font-size:2.05rem;font-weight:700;line-height:1.1;display:block}
+.stat .n.accent{color:var(--emu-yellow)}
+.stat .l{font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;opacity:.88;font-weight:600;display:block;margin-top:5px}
+
+/* ── type ──────────────────────────────────────────── */
+.section-header{font-weight:700;color:var(--emu-blue);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid rgba(0,86,184,.22);padding-bottom:9px;margin:0 0 20px}
+h2{font-size:1.72rem;font-weight:700;margin:0 0 14px;color:var(--emu-blue-mid);line-height:1.24}
+h3{font-size:1.1rem;font-weight:600;margin:26px 0 8px;color:var(--emu-blue-mid)}
+p{margin:0 0 15px}
+.lede{font-size:1.06rem}
+.muted{color:var(--ink-soft)}
+
+/* ── steps ─────────────────────────────────────────── */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 0 50px;margin:0 0 17px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--emu-blue);color:#fff;font-weight:700;font-size:.95rem;display:flex;align-items:center;justify-content:center}
+.band-soft ol.steps li::before{box-shadow:0 0 0 4px rgba(255,255,255,.65)}
+ul.plain{padding-left:22px;margin:0 0 15px}
+ul.plain li{margin-bottom:9px}
+
+/* ── prompt ────────────────────────────────────────── */
+.promptbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--emu-blue);color:#fff;padding:13px 18px;border-radius:6px 6px 0 0;flex-wrap:wrap}
+.promptbar strong{font-weight:600;font-size:.96rem}
+.copybtn{background:#fff;color:var(--emu-blue);font-weight:700;font-size:.9rem;border:none;border-radius:5px;padding:10px 20px;cursor:pointer;min-width:140px;transition:background .16s ease,color .16s ease,transform .1s ease}
+.copybtn:hover{background:var(--emu-blue-light)}
+.copybtn:active{transform:scale(.97)}
+.copybtn.done{background:var(--emu-yellow);color:#3A2600}
+#prompt{margin:0;background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;padding:22px 24px;white-space:pre-wrap;font-family:var(--font-sans);font-size:.96rem;line-height:1.62;color:var(--ink)}
+
+/* ── callouts ──────────────────────────────────────── */
+.callout{background:#fff;border-left:4px solid var(--emu-blue);padding:20px 24px;margin:0 0 18px;border-radius:0 6px 6px 0;box-shadow:0 1px 3px rgba(16,44,82,.06)}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.callout.warn{border-left-color:var(--emu-yellow)}
+.band-white .callout{background:var(--emu-blue-light);box-shadow:none}
+.band-white .callout.warn{background:#FEF6E6}
+
+.pullquote{font-family:var(--font-serif);font-style:italic;font-size:1.24rem;line-height:1.55;color:var(--emu-blue-mid);border-left:3px solid var(--emu-yellow);padding:6px 0 6px 22px;margin:28px 0 0;max-width:56ch}
+
+/* ── table ─────────────────────────────────────────── */
+.tablewrap{overflow-x:auto;border-radius:6px;border:1px solid var(--line);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.97rem}
+th{background:var(--emu-blue);color:#fff;text-align:left;font-weight:600;padding:12px 16px;white-space:nowrap}
+td{padding:11px 16px;border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even){background:#F4F9FD}
+
+/* ── cards ─────────────────────────────────────────── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:20px 22px;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(16,44,82,.10);border-color:rgba(0,86,184,.35)}
+.card h3{margin:0 0 6px;font-size:1.03rem}
+.card p{margin-bottom:0;font-size:.94rem;color:var(--ink-soft)}
+
+/* ── mountains + footer ────────────────────────────── */
+.mountains{display:block;width:100%;height:auto;margin-bottom:-5px}
+footer{background:var(--emu-blue-dark);color:#fff;padding:14px 0 40px}
+footer .fmark{height:34px;width:auto;display:block;margin:0 0 16px;opacity:.95}
+footer p{opacity:.86;font-size:.94rem;margin:0 0 8px}
+footer a{color:#fff}
+footer .ftag{font-size:.9rem;letter-spacing:.14em;opacity:.75;margin-top:18px}
+
+/* ── setup flag ────────────────────────────────────── */
+.setup-flag{display:none;background:#FEF6E6;border-bottom:2px solid var(--emu-yellow);padding:13px 0;font-size:.92rem;color:#5A3E00}
+.setup-flag code{background:#fff;padding:2px 7px;border-radius:3px;font-size:.88em}
+
+@media (max-width:620px){
+  .hero h1{font-size:1.95rem}
+  .hero{padding:36px 0 42px}
+  .band{padding:40px 0}
+  .masthead img{height:34px}
+  .btn{width:100%;text-align:center}
+  .copybtn{width:100%}
+  .stat .n{font-size:1.75rem}
+}
+</style>
+</head>
+<body>
+
+<div class="setup-flag" id="setupFlag">
+  <div class="wrap">Heads up, this page still has placeholder links in it. Open <code>index.html</code> and fill in the <code>CONFIG</code> block at the bottom.</div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="masthead">
+      <a href="#top" aria-label="Eastern Mennonite University"><img src="assets/emu-logo-white.png" alt="Eastern Mennonite University"></a>
+      <div class="meta">AI Work Session &middot; Wednesday, August 19</div>
+    </div>
+  </div>
+  <div class="hero" id="top">
+    <div class="wrap">
+      <h1>Build a reminder system from a spreadsheet</h1>
+      <p class="lede">You have a list of people who each need to submit something, at different stages. This exercise shows you how you could build a reminder system to generate your email drafts directly in Gmail with dynamic copy.</p>
+      <div class="btn-row">
+        <a class="btn btn-yellow" id="sheetLink" href="#">Make your copy of the sheet</a>
+        <a class="btn btn-ghost" href="#prompt-section">Jump to the prompt</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="n">1 click</span><span class="l">Runs the whole list</span></div>
+        <div class="stat"><span class="n">Minutes</span><span class="l">Not an afternoon</span></div>
+        <div class="stat"><span class="n accent">0</span><span class="l">Real records shown to AI</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="band band-white">
+    <div class="wrap">
+      <p class="section-header">Start here</p>
+      <h2>Seven steps</h2>
+      <ol class="steps">
+        <li><strong>Make your copy of the sheet</strong> using the button above. It lands in your own Drive, already filled in. Do not build a sheet yourself.</li>
+        <li>Open <a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> in a new tab.</li>
+        <li>Copy the prompt below and paste it into Gemini.</li>
+        <li>Copy the code Gemini gives back.</li>
+        <li>In your sheet, go to <strong>Extensions &rsaquo; Apps Script</strong>. Click the project name at the top left and rename it <strong>Reminder machine</strong>. You will see that name again in a moment, and it matters.</li>
+        <li>Delete everything in the editor, paste the code, and save.</li>
+        <li>Go back to the sheet and <strong>reload the page</strong>. A new menu appears. Click it.</li>
+      </ol>
+      <div class="callout">
+        <p><strong>You need a laptop for this one.</strong> The Extensions menu does not exist in the Sheets mobile app. If you are on a phone, pair up with someone who brought one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-soft" id="prompt-section">
+    <div class="wrap">
+      <p class="section-header">Step three</p>
+      <h2>The prompt</h2>
+      <p>Do not retype this. Hit copy.</p>
+      <div class="promptbar">
+        <strong>Paste this into Gemini</strong>
+        <button class="copybtn" id="copyBtn" type="button">Copy the prompt</button>
+      </div>
+<pre id="prompt">I use a Google Sheet to track students who each need to complete a requirement. I want a Google Apps Script that decides who needs a reminder and writes the emails for me.
+
+The sheet has one tab called Roster with these columns in this order: Name, Email, Item needed, Status, Due date, Reminders sent, Last reminder. Row 1 is headers. Status is one of Not started, Started, or Complete. Reminders sent is a number. Last reminder is a date or blank.
+
+Here is a sample row so you can see the shape:
+Avery Nolan | avery.nolan@example.com | Immunization record | Not started | 2026-08-01 | 0 | (blank)
+
+Go through every row and apply these rules:
+- If Status is Complete, skip the row.
+- If the due date has not passed, skip the row.
+- If past due and Reminders sent is 0, create a first reminder.
+- If past due and Reminders sent is 1 and Last reminder was 7 or more days ago, create a second, firmer reminder.
+- If past due and Reminders sent is 2 and Last reminder was 7 or more days ago, do not write an email. Add the person to a tab called Needs a call instead.
+
+The emails should be short and warm, address the person by first name, name the specific item they owe, and mention the due date.
+
+Important requirements:
+- Create Gmail drafts. Do not send anything.
+- After drafting, increase Reminders sent by one and put today's date in Last reminder.
+- Add a menu to the spreadsheet called Reminders with one item that runs this.
+- When it finishes, show me a popup summarizing how many first reminders, second reminders, and calls came out of the run.
+- Add comments explaining what each section does, because I don't write code.</pre>
+      <p class="pullquote">You never showed Gemini a single real person. It saw column names, one invented row, and your rules. The code came back, and the code runs where your data already lives.</p>
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <div class="wrap">
+      <p class="section-header">Step seven</p>
+      <h2>The permission screen</h2>
+      <p>Everyone hits this. Nothing has gone wrong. Two screens stand between you and a working script.</p>
+
+      <h3>First screen: "Authorization required"</h3>
+      <p>It offers Cancel and Review permissions. Cancel is drawn like the safe button. It is not the one you want. Click <strong>Review permissions</strong> and confirm your EMU account.</p>
+
+      <h3>Second screen: the permission grant</h3>
+      <p>It names your script and lists what it wants access to. Check <strong>every</strong> box, or click Select all, then continue. A partial grant fails later in a way that looks like broken code.</p>
+
+      <div class="callout warn">
+        <p><strong>Read that screen before you click.</strong> One line says "Read, compose, send, and permanently delete all your email from Gmail." That should get your attention. Three things are true about it:</p>
+        <ul class="plain">
+          <li><strong>The app asking is yours.</strong> Look at the name on that screen. It says <strong>Reminder machine</strong>, because you typed that a minute ago. The thing requesting access to all your email is the code you pasted ninety seconds ago.</li>
+          <li><strong>The ask is broad because it has to be.</strong> Apps Script requests Gmail access at the account level. There is no drafts-only permission to grant.</li>
+          <li><strong>You can take it back.</strong> Go to <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> any time and revoke it in about four clicks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <div class="wrap">
+      <p class="section-header">Troubleshooting</p>
+      <h2>If nothing happens</h2>
+      <ul class="plain">
+        <li><strong>No new menu?</strong> Reload the sheet, and check that you saved in the Apps Script editor.</li>
+        <li><strong>Wrong people getting emails?</strong> Check that the column order matches what you told Gemini.</li>
+        <li><strong>Nothing at all, and no error?</strong> Almost always a date problem. Sheets dates and script dates do not compare cleanly, and it fails silently.</li>
+        <li><strong>Still stuck?</strong> Raise a hand. A flagged failure is worth more to this room than a quiet success.</li>
+      </ul>
+
+      <h2 style="margin-top:34px">What a correct script produces</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Outcome</th><th>How many</th><th>Who</th></tr></thead>
+          <tbody>
+            <tr><td>First reminder</td><td>2</td><td>Avery Nolan, Morgan Ellis</td></tr>
+            <tr><td>Second reminder</td><td>2</td><td>Jordan Reyes, Priya Raman</td></tr>
+            <tr><td>Needs a call</td><td>1</td><td>Sam Okonkwo</td></tr>
+            <tr><td>Skipped</td><td>3</td><td>Riley Chen, Devon Marsh, Kai Whitfield</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:12px">Three people are skipped for three different reasons. If your script skipped them for the wrong reasons, it still looks like it worked. That is the whole lesson.</p>
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <div class="wrap">
+      <p class="section-header">Round two</p>
+      <h2>Make it yours</h2>
+      <p>Pick one. They get harder as you go down.</p>
+      <div class="grid">
+        <div class="card"><h3>Change the voice</h3><p>Rewrite the second reminder in your own tone, or add a third one.</p></div>
+        <div class="card"><h3>Add an owner</h3><p>Add a column for the office that owns each item, and sign the email from that office.</p></div>
+        <div class="card"><h3>One digest instead</h3><p>Send yourself a single daily summary of everyone overdue, rather than individual drafts.</p></div>
+        <div class="card"><h3>Different item, different message</h3><p>Write a distinct message depending on which item is missing.</p></div>
+        <div class="card"><h3>Keep a log</h3><p>Add a Log tab that records every draft it ever creates, with a timestamp.</p></div>
+        <div class="card"><h3>Run it without you</h3><p>Make it fire on its own every Monday morning. This one needs a trigger. Go find it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <div class="wrap">
+      <p class="section-header">Take it with you</p>
+      <h2>Before you leave</h2>
+      <p class="lede">What is the list you actually chase at work? Incomplete files, missing forms, unsigned documents, overdue trainings, unreturned equipment. It is the same shape as what you just built.</p>
+      <div class="btn-row" style="margin-top:22px">
+        <a class="btn btn-yellow" id="formLink" href="#">Submit your own workflow</a>
+        <a class="btn btn-outline" id="cardLink" href="workflow-card.pdf">Printable card (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<img class="mountains" src="assets/mountains.png" alt="">
+<footer>
+  <div class="wrap">
+    <img class="fmark" src="assets/emu-logo-white.png" alt="Eastern Mennonite University">
+    <p><strong>AI Work Sessions</strong> &middot; Faculty and Staff Conference, Wednesday, August 19</p>
+    <p>Questions, or want help with a workflow of your own? Find Luke Litwiller in Undergraduate Admissions.</p>
+    <p class="ftag"><span style="font-weight:300">LEAD</span> <span style="font-weight:700">TOGETHER</span></p>
+  </div>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   CONFIG - paste your links here, then everything else works.
+   For the sheet: take the normal share URL and replace
+   everything from /edit onward with /copy
+   ───────────────────────────────────────────────────────────── */
+const CONFIG = {
+  sheetCopyLink : "PASTE_SHEET_COPY_LINK",
+  intakeFormLink: "https://docs.google.com/forms/d/e/1FAIpQLSesLi2_2Onj8dbkhLBr98RWqL-MP6nBUbn_OHy7_bD8aJRCQw/viewform",
+  cardPdf       : "workflow-card.pdf"
+};
+
+(function () {
+  var unset = [];
+  function apply(id, url) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!url || url.indexOf("PASTE_") === 0) { unset.push(id); el.setAttribute("href", "#"); return; }
+    el.setAttribute("href", url);
+    if (url.indexOf("http") === 0) { el.setAttribute("target", "_blank"); el.setAttribute("rel", "noopener"); }
+  }
+  apply("sheetLink", CONFIG.sheetCopyLink);
+  apply("formLink",  CONFIG.intakeFormLink);
+  apply("cardLink",  CONFIG.cardPdf);
+  if (unset.length) document.getElementById("setupFlag").style.display = "block";
+
+  var btn = document.getElementById("copyBtn");
+  var pre = document.getElementById("prompt");
+  btn.addEventListener("click", function () {
+    var text = pre.innerText;
+    function ok() {
+      btn.textContent = "Copied";
+      btn.classList.add("done");
+      setTimeout(function () { btn.textContent = "Copy the prompt"; btn.classList.remove("done"); }, 2200);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); ok(); }
+      catch (e) { btn.textContent = "Select it manually"; }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
