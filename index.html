@@ -754,8 +754,11 @@ Here are the notes:</pre>
         <span class="chip quiet">Laptop required</span>
       </div>
       <h2 class="actbig">Turn a registration list into a caterer's numbers</h2>
-      <p class="lede">Somebody signed up twice, somebody cancelled, somebody is on the waitlist, three people wrote "no gluten" three different ways, and the caterer needs a number by Friday. Everyone who has ever run a campus event has hand-counted this list at least once.</p>
-      <p>You are going to build a button that counts it, separates the things that are not actually meal preferences, and refuses to guess at the ones it cannot read.</p>
+      <p class="lede"><strong>192 rows.</strong> Seven people signed up twice, ten cancelled, fourteen are on the waitlist, and a dozen wrote something in the dietary box that nobody can turn into a meal. The caterer needs a number by Friday. Everyone who has ever run a campus event has sat down and hand-counted a list like this, and everyone who has done it has gotten it wrong.</p>
+      <p>You are going to build a button that counts it in about four seconds, separates the things that are not actually meal preferences, and refuses to guess at the ones it cannot read.</p>
+      <div class="callout">
+        <p><strong>The length is the point.</strong> With twelve rows you would just count them yourself and you would be right. At 192, hand-counting takes most of an afternoon and you will still miss the person who registered twice with different sessions the second time. This is the size at which the work stops being worth doing by hand - which is exactly the size most real campus lists are.</p>
+      </div>
 
       <div class="btn-row" style="margin:22px 0 4px">
         <a class="btn btn-yellow" id="regSheetLink" href="#">Make your copy of the sheet</a>
@@ -802,9 +805,10 @@ Here are the notes:</pre>
             <p class="bhint">Drafts, never sends - that one is not optional. And this time also: <strong>do not write over the Registrations tab.</strong> Ask for new tabs instead. A script that reorganizes your source data in place is a bad afternoon.</p>
           </li>
           <li>
-            <h5>Decide what "done" looks like, then check it</h5>
-            <p class="bask">Before you run it, work out on paper how many people are actually eating lunch. Do not skip this.</p>
-            <p class="bhint">Twelve rows, but not twelve people and not twelve meals. Count it yourself first, then compare with what the script produces. If you cannot say what the right answer is, you cannot tell a working script from a broken one - and this sheet is built so that a broken one looks fine.</p>
+            <h5>Decide what "done" looks like before you look at the output</h5>
+            <p class="bask">You cannot count 192 rows by hand, so you cannot check this one the way you checked Activity 1. Check the <em>relationships</em> instead.</p>
+            <p class="bhint">Write these down before you run it: meals counted plus meals unresolved should equal the lunch headcount exactly. Gmail drafts should equal unique registered people. Nobody cancelled and nobody on the waitlist should appear anywhere except their own tab. If any of those does not hold, something upstream is wrong no matter how reasonable the numbers look.</p>
+            <p class="bwarn">This is the lesson that actually transfers. At real scale you will never verify the whole output - so you build in checks that would break loudly if the logic were wrong, and you check <em>those</em>.</p>
           </li>
         </ol>
 
@@ -870,44 +874,48 @@ Important requirements:
         <table>
           <thead><tr><th>Meals</th><th>Count</th></tr></thead>
           <tbody>
-            <tr><td>Standard</td><td>5</td></tr>
-            <tr><td>Vegetarian</td><td>1</td></tr>
-            <tr><td>Gluten-free</td><td>2</td></tr>
-            <tr><td>Vegan</td><td>1</td></tr>
-            <tr><td><strong>Counted</strong></td><td><strong>9</strong></td></tr>
-            <tr><td>Unresolved, waiting on a human</td><td>3</td></tr>
+            <tr><td>Standard</td><td>100</td></tr>
+            <tr><td>Vegetarian</td><td>22</td></tr>
+            <tr><td>Gluten-free</td><td>25</td></tr>
+            <tr><td>Vegan</td><td>7</td></tr>
+            <tr><td><strong>Counted</strong></td><td><strong>154</strong></td></tr>
+            <tr><td>Unresolved, waiting on a human</td><td>20</td></tr>
           </tbody>
         </table>
       </div>
       <div class="tablewrap" style="margin-top:16px">
         <table>
-          <thead><tr><th>Everything else</th><th>Count</th><th>Who</th></tr></thead>
+          <thead><tr><th>Everything else</th><th>Count</th><th>What it is</th></tr></thead>
           <tbody>
-            <tr><td>Morning headcount</td><td>9</td><td>Includes four guests</td></tr>
-            <tr><td>Lunch headcount</td><td>12</td><td>Nine meals decided, three pending</td></tr>
-            <tr><td>Afternoon headcount</td><td>3</td><td>Morgan plus a guest, and Noor</td></tr>
-            <tr><td>Waitlist tab</td><td>1</td><td>Riley Chen</td></tr>
-            <tr><td>Accessibility tab</td><td>3</td><td>Priya Raman, Kai Whitfield, Tom&aacute;s Vega</td></tr>
-            <tr><td>Check this tab</td><td>3</td><td>Devon's second registration, Devon's unreadable dietary note, Noor's nut allergy</td></tr>
-            <tr><td>Gmail drafts</td><td>9</td><td>Everyone registered, deduplicated, minus the waitlist and the cancellation</td></tr>
+            <tr><td>Rows in the sheet</td><td>192</td><td>Before anything is filtered</td></tr>
+            <tr><td>Unique registered people</td><td>161</td><td>After cancellations, waitlist, and duplicates come out</td></tr>
+            <tr><td>Morning headcount</td><td>156</td><td>Guests included</td></tr>
+            <tr><td>Lunch headcount</td><td>174</td><td>154 meals decided, 20 pending</td></tr>
+            <tr><td>Afternoon headcount</td><td>78</td><td>Guests included</td></tr>
+            <tr><td>Waitlist tab</td><td>14</td><td>No meal, no headcount, no email</td></tr>
+            <tr><td>Accessibility tab</td><td>23</td><td>Never dietary needs</td></tr>
+            <tr><td>Check this tab</td><td>28</td><td>7 duplicate registrations + 9 allergies + 12 unreadable dietary notes</td></tr>
+            <tr><td>Gmail drafts</td><td>161</td><td>One per unique registered person</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="keyline">Twelve rows, eleven people, nine emails, nine meals. If any of those four numbers is off, something upstream is wrong.</p>
+      <p class="keyline"><strong>The three relationships that have to hold.</strong> 154 counted plus 20 unresolved equals the lunch headcount of 174. Gmail drafts equal unique people, 161 both. And 192 rows minus 10 cancelled, 14 waitlisted, and 7 duplicates leaves exactly 161. Check those three before you look at anything else - if one of them is off, the individual numbers are meaningless no matter how sensible they look.</p>
+      <p class="keyline">Named people worth spot-checking: <strong>Devon Marsh</strong> appears twice and should count once, with an unreadable diet that lands on Check this. <strong>Noor Haddad</strong> has a nut allergy and is not coming to lunch - two separate traps in one row. <strong>Sam Okonkwo</strong> cancelled. <strong>Riley Chen</strong> is waitlisted with "veg" in the dietary box that must not reach the counts.</p>
         </div>
       </details>
 
       <details class="panel">
         <summary><span class="ptitle">Where it goes wrong</span><span class="phint">Seven ways, and what each one means</span></summary>
         <div class="pbody">
+      <p>At this size none of these announce themselves. The output looks like a tidy table of numbers either way, which is the entire reason the relationships above matter more than the individual figures.</p>
       <ul class="plain">
-        <li><strong>Six meals instead of nine.</strong> It ignored the Guests column. Four people are getting no lunch, and you find out at the event.</li>
-        <li><strong>Ten meals.</strong> Riley came off the waitlist, or Sam's cancellation got counted anyway.</li>
-        <li><strong>Thirteen at lunch.</strong> Devon got counted twice, along with both guests.</li>
-        <li><strong>Two vegetarians.</strong> Either it read Riley's "veg" off the waitlist, or it decided "same as last time" meant vegetarian. It does not know that. Neither do you.</li>
-        <li><strong>"Nut allergy" appears in the meal counts.</strong> It treated an allergy as a preference. Noor is not even coming to lunch, which makes it two mistakes stacked.</li>
-        <li><strong>"Wheelchair access needed" shows up as a diet.</strong> It read the wrong column, and it did so without hesitating.</li>
-        <li><strong>Eleven or twelve drafts.</strong> Someone who cancelled just got a confirmation email.</li>
+        <li><strong>Around 119 meals instead of 154.</strong> It ignored the Guests column. Thirty-five people show up expecting lunch and there is no plate for them, and you find out at the event.</li>
+        <li><strong>More than 154, and counted plus unresolved no longer equals 174.</strong> Waitlisted people got meals, or the ten cancellations got counted anyway. Both are invisible in the totals alone.</li>
+        <li><strong>168 unique people instead of 161.</strong> It never deduplicated. Seven people are getting two confirmation emails each and two plates each.</li>
+        <li><strong>Zero in the unresolved column.</strong> The most dangerous possible output. It means the AI decided that "same as last time," "ask me," and "TBD" were all Standard rather than admitting it could not tell. Twelve people get the wrong meal and nothing anywhere looks broken.</li>
+        <li><strong>Allergies folded into the meal counts.</strong> Nine people with allergies got sorted into a category instead of going to a human. Noor Haddad is not even coming to lunch, which makes that row two mistakes stacked.</li>
+        <li><strong>Accessibility needs showing up as diets.</strong> "Wheelchair access needed" and "ASL interpreter" appear in the food counts. It read the wrong column, and it did so without hesitating.</li>
+        <li><strong>More than 161 drafts.</strong> Somebody who cancelled just got a confirmation email. At twelve rows you would catch that. At 192 you will not.</li>
       </ul>
         </div>
       </details>
@@ -964,7 +972,7 @@ Important requirements:
    ───────────────────────────────────────────────────────────── */
 const CONFIG = {
   sheetCopyLink   : "https://docs.google.com/spreadsheets/d/1XzlKYDG-oD6dNsUAUNBg_HNALcxho2MBcrWZcL294DE/copy",
-  regSheetCopyLink: "PASTE_REGISTRATION_SHEET_COPY_LINK",
+  regSheetCopyLink: "https://docs.google.com/spreadsheets/d/1fdgyVZmAbphKhjq3XDJ3dp-wg5SKzcjL2Spx-jdq-a0/copy",
   intakeFormLink  : "https://docs.google.com/forms/d/e/1FAIpQLSesLi2_2Onj8dbkhLBr98RWqL-MP6nBUbn_OHy7_bD8aJRCQw/viewform",
   cardPdf         : "workflow-card.pdf",
   handoutPdf      : "handout-workflow-teardown.pdf"
