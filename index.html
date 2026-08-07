@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Work Session | EMU Faculty and Staff Conference</title>
-<meta name="description" content="Everything from the EMU faculty and staff AI Work Session, Wednesday, August 19: the data rules, the workflow teardown method, the reminder-machine build, and two take-home challenges.">
+<title>EMU AI Workshop | Faculty and Staff Conference</title>
+<meta name="description" content="Everything from the EMU AI Workshop, Wednesday, August 19: the data rules, the workflow overview method, the reminder-machine build, and two take-home challenges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -178,6 +178,7 @@ section[id]{scroll-margin-top:62px}
 .loopnote{margin-top:6px;padding:14px 18px;border-left:4px solid var(--emu-yellow);background:rgba(255,199,44,.13);font-weight:600;font-size:1rem}
 .truths{margin-top:34px}
 .truths .card p.ex{margin-top:9px;font-size:.93rem;color:var(--ink-soft);font-style:italic}
+.truths .card p.ex b{font-style:normal;font-weight:700;color:var(--emu-blue)}
 
 /* ── hero activity map ─────────────────────────────────── */
 .actmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 0}
@@ -241,6 +242,15 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
 .selfcheck ul{margin:0;padding-left:20px}
 .selfcheck li{margin:0 0 6px;font-size:.95rem;line-height:1.5}
 .selfcheck li:last-child{margin-bottom:0}
+
+/* ── closing takeaways ─────────────────────────────────── */
+.takeaways{list-style:none;counter-reset:tk;margin:26px 0 0;padding:0}
+.takeaways>li{counter-increment:tk;position:relative;padding:0 0 22px 62px;margin:0}
+.takeaways>li:before{content:counter(tk);position:absolute;left:0;top:-4px;width:44px;height:44px;border-radius:50%;background:var(--emu-yellow);color:#3A2600;font-weight:700;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+.takeaways h3{margin:4px 0 7px;font-size:1.28rem;color:var(--emu-blue)}
+.takeaways p{margin:0;font-size:1.02rem;line-height:1.6}
+.takeaways p.tksub{margin-top:8px;font-size:.95rem;color:var(--ink-soft)}
+@media(max-width:640px){.takeaways>li{padding-left:52px}.takeaways>li:before{width:38px;height:38px;font-size:1.1rem}}
 </style>
 </head>
 <body>
@@ -253,13 +263,13 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
   <div class="wrap">
     <div class="masthead">
       <a href="#top" aria-label="Eastern Mennonite University"><span class="emu-mark hdr"></span></a>
-      <div class="meta">AI Work Session &middot; Wednesday, August 19</div>
+      <div class="meta">EMU AI Workshop &middot; Wednesday, August 19</div>
     </div>
   </div>
   <div class="hero" id="top">
     <div class="wrap">
       <h1>From a repetitive task to a working solution</h1>
-      <p class="lede">Everything from today's session lives on this page: what is safe to put into a public AI tool, the five-step method, and three things to build with it. You write the prompts yourself - that is the part that transfers. Free tools only. No AI ever sees a real person or a real EMU record.</p>
+      <p class="lede">Everything from today lives here: what is safe to put into a public AI tool, the method, and three things to build with it. Free tools only. No AI ever sees a real person or a real EMU record.</p>
       <div class="actmap">
         <a class="actcard now" href="#activity-1">
           <span class="acthead"><span class="actnum">Activity 1</span><span class="actwhen now">Start here</span></span>
@@ -277,7 +287,6 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
           <span class="actneed">Laptop required &middot; the hardest of the three</span>
         </a>
       </div>
-      <p class="heronote">Everyone starts on Activity 1 so we are in the same place. Get it working and you are not done - pick two or three, or go back and make one of them yours. Nobody is expected to finish all three, and there is no prize for speed.</p>
     </div>
   </div>
 </header>
@@ -299,9 +308,8 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
   <section class="band band-white" id="data-rule">
     <div class="wrap">
       <p class="section-header">Read this first</p>
-      <span class="draftflag">Draft, pending IT review</span>
       <h2>What goes in the box</h2>
-      <p class="lede">Before anything else. Every tool on this page is a public one, which means whatever you type into it leaves EMU. This is the whole rule, and it takes ten seconds to learn.</p>
+      <p class="lede">Every tool on this page is public, which means whatever you type into it leaves EMU.</p>
       <div class="lights">
         <div class="light green">
           <p class="lname">Green &middot; go ahead</p>
@@ -326,9 +334,9 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
       </div>
       <p class="notsure">Not sure? Then it's red.</p>
       <div class="callout" style="margin-top:26px">
-        <p><strong>Here is the good news, and it is the point of the whole session.</strong> Nothing you build today needs to break that rule. You hand the AI the <em>shape</em> of your data - the column names and one invented row - and it hands back instructions. The instructions run where your data already lives. The AI never sees a real person or a real number, and you still get the thing you wanted.</p>
+        <p><strong>The good news:</strong> nothing you build today needs to break that rule. You hand over the <em>shape</em> of your data - column names and one invented row - and it hands back instructions that run where your data already lives.</p>
       </div>
-      <p class="muted" style="margin-top:18px">One more thing worth knowing: <strong>the tool you are using decides which light you are on.</strong> Same prompt, same screen, different agreement behind it, different rules. Everything on this page assumes the free public version, which is the strictest case.</p>
+      <p class="muted" style="margin-top:18px"><strong>The tool you are using decides which light you are on.</strong> Same prompt, different agreement behind it, different rules. This page assumes the free public version - the strictest case.</p>
     </div>
   </section>
 
@@ -336,55 +344,52 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
   <section class="band band-soft" id="method">
     <div class="wrap">
       <p class="section-header">The method</p>
-      <h2>The workflow teardown</h2>
-      <p class="lede">A way to turn something you do over and over into something that mostly does itself. Five steps, and the last one sends you back to the third.</p>
+      <h2>The workflow overview</h2>
       <div class="callout">
-        <p><strong>Treat it like a bright new intern who has never worked here.</strong> Capable, fast, eager, and completely ignorant of how your office actually runs. Whatever you would have to tell that person is your prompt.</p>
+        <p><strong>Treat it like a bright new intern who has never worked here.</strong> Capable, fast, eager, and completely ignorant of how your office runs. Whatever you would tell that person is your prompt.</p>
       </div>
       <ol class="tdsteps">
         <li>
           <h3>Name the task</h3>
-          <p>One sentence. What the job is, and what you want to come out the other end. Do not add detail yet - you are telling it what room you are standing in.</p>
+          <p>One sentence. What the job is, and what you want to come out the other end.</p>
         </li>
         <li>
           <h3>Write the context a new employee would need</h3>
-          <p>The part everyone skips, and the part that decides whether this works. Where the information lives, what the columns are called and in what order, what the values mean, what a normal example looks like. It cannot see your screen and it will not ask.</p>
+          <p>The part everyone can be easy to skip, and the part that decides whether this actually works. Where the information lives, what the columns are called and in what order, what the values mean, what a normal example looks like. It cannot see your screen and it will not ask.</p>
         </li>
         <li>
           <h3>Hand it over as instructions - as a first message, not a finished one</h3>
-          <p>Every rule, including what to leave alone. Every guardrail, including what it must never do. Then send it, knowing it is wrong somewhere. This is the opening move of a conversation, not a specification you got right.</p>
+          <p>Every rule, including what to leave alone. Every guardrail, including what it must never do. Then send it, knowing it is wrong somewhere. This is the opening of an iterative conversation and it's extremely rare to get it perfect on the first try.</p>
         </li>
         <li>
           <h3>Test it on an example where you already know the answer</h3>
-          <p>Not a real one. A made-up one, small, where you can count the correct result on your fingers before you run it. If you cannot tell right from wrong, you cannot tell working from broken - and broken usually looks fine.</p>
+          <p>Not a real one. A made-up one, small, where you can count the correct result before you run it. If you cannot tell right from wrong, you cannot tell working from broken.</p>
         </li>
         <li>
           <h3>Read the result like an editor, then go back to step three</h3>
-          <p>Tell it what it got wrong, in plain language, and paste the error if there is one. Then again. The loop is the method. Nobody good at this gets it on the first try; they just keep going after it fails.</p>
+          <p>Tell it what it got wrong, in plain language, and paste the error if there is one. Then again. The loop is the method. Keep on iterating!</p>
         </li>
       </ol>
-      <p class="loopnote">Steps three through five are a loop, not a line. Expect to go around it three or four times.</p>
 
-      <h2 style="margin-top:42px">Three things that are true every time</h2>
+      <h2 style="margin-top:42px">3 things to keep in mind</h2>
       <div class="grid truths">
         <div class="card">
           <h3>Your first message is a draft, and so is your understanding of your own process</h3>
-          <p class="ex">I told it the report would arrive as a spreadsheet attachment. It built me something that read spreadsheet attachments, flawlessly. There were no attachments. It built exactly what I described, and what I described was wrong.</p>
+          <p class="ex"><b>In my example:</b> I told it the report would arrive as a spreadsheet attachment. It built exactly that, flawlessly. There were no attachments. What I described was wrong.</p>
         </div>
         <div class="card">
           <h3>It does not know when it is wrong, and it never sounds like it</h3>
-          <p class="ex">A report had a summary line at the top reading "Total Records: 4." My script read that 4, decided it was a student ID, and went looking for the student named 4. It did not hesitate. Nothing in the output looked wrong.</p>
+          <p class="ex"><b>In my example:</b> a report had a line reading "Total Records: 4." My script decided 4 was a student ID and went looking for the student named 4. Nothing in the output looked wrong.</p>
         </div>
         <div class="card">
-          <h3>The thing that breaks it is never the hard part</h3>
-          <p class="ex">Mine looked for unread emails. So if anyone opened one on their phone before the script ran, that student's data was gone - silently, permanently. The code was fine. The assumption underneath it was one I never noticed I had made.</p>
+          <h3>Small things can cause a script to break or not work as intended</h3>
+          <p class="ex"><b>In my example:</b> mine looked for unread emails. If anyone opened one on their phone first, that student's data was gone - silently. The code was fine. My assumption was not.</p>
         </div>
       </div>
-      <p class="pullquote">The AI does not need to see a real person, or a real number, to be useful. Give it the shape of your data and an invented example. What comes back is a set of instructions that runs where your data already lives.</p>
+      <p class="pullquote">The AI does not need to see a real person, or a real number, to be useful. Give it the shape of your data and an invented example.</p>
       <div class="btn-row" style="margin-top:22px">
-        <a class="btn btn-outline" id="handoutLink" href="handout-workflow-teardown.pdf">The teardown handout (PDF)</a>
+        <a class="btn btn-outline" id="handoutLink" href="handout-workflow-overview.pdf">The workflow handout (PDF)</a>
       </div>
-      <p class="muted" style="margin-top:12px">Page two of the handout cuts the exercise prompt below apart and labels which of the five steps each chunk is doing.</p>
     </div>
   </section>
 
@@ -397,72 +402,69 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
         <span class="chip quiet">Laptop required</span>
       </div>
       <h2 class="actbig">Build a reminder system from a spreadsheet</h2>
-      <p class="lede">You have a list of people who each need to submit something, at different stages. You are going to build a button that decides who is due for a nudge and writes the emails for you, with copy that changes depending on the row.</p>
+      <p class="lede">A list of people who each owe you something, at different stages. You will build a button that decides who is due for a nudge and drafts the emails, with copy that changes by row.</p>
       <div class="btn-row" style="margin:24px 0 4px">
         <a class="btn btn-yellow" id="sheetLink" href="#">Make your copy of the sheet</a>
         <a class="btn btn-outline" href="#a1-prompt">Jump to writing the prompt</a>
       </div>
 
-      <h3 class="stepshead">Seven steps</h3>
       <ol class="steps">
         <li><strong>Make your copy of the sheet</strong> using the button above. It lands in your own Drive, already filled in. Do not build a sheet yourself.</li>
         <li>Open <a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> in a new tab.</li>
         <li><strong>Write your prompt</strong> using the scaffold below, and send it.</li>
         <li>Copy the code Gemini gives back.</li>
-        <li>In your sheet, go to <strong>Extensions &rsaquo; Apps Script</strong>. Click the project name at the top left and rename it <strong>Reminder machine</strong>. You will see that name again in a moment, and it matters.</li>
+        <li>In your sheet, go to <strong>Extensions &rsaquo; Apps Script</strong>. Rename the project <strong>Reminder machine</strong> - you will see that name again, and it matters.</li>
         <li>Delete everything in the editor, paste the code, and save.</li>
         <li>Go back to the sheet and <strong>reload the page</strong>. A new menu appears. Click it.</li>
       </ol>
       <div class="callout">
-        <p><strong>You need a laptop for this one.</strong> The Extensions menu does not exist in the Sheets mobile app. If you are on a phone, pair up with someone who brought one.</p>
+        <p><strong>Laptop needed.</strong> The Extensions menu does not exist in the Sheets mobile app - if you are on a phone, pair up.</p>
       </div>
 
-      <h3 class="stepshead" id="a1-prompt">Write the prompt, for step three</h3>
-      <p>Here is where most people expect a block of text to copy. There is one at the bottom of this section, and you can have it any time you want it - but write your own first. Ten minutes of doing it yourself is the difference between leaving here with a script and leaving here able to build the next one.</p>
+      <h3 class="stepshead" id="a1-prompt">Write the prompt</h3>
+      <p>Write your own before you look at ours. Doing it yourself is the difference between leaving with a script and leaving able to build the next one.</p>
 
       <div class="builder">
-        <h4>Build it in five moves</h4>
-        <p class="builderintro">The same five steps from the method above. Open your sheet next to this and type straight into Gemini as you go. Do not aim for elegant - aim for complete.</p>
+        <h4>Five moves</h4>
+        <p class="builderintro">Open your sheet next to this and type straight into Gemini. Aim for complete, not elegant.</p>
         <ol class="bsteps">
           <li>
-            <h5>Name the task</h5>
-            <p class="bask">Two sentences. What you have, and what you want to come out the other end.</p>
-            <p class="bhint">Say the words "Google Apps Script" - that is what tells it to write code that lives in your sheet instead of just answering you in the chat.</p>
-            <p class="bstarter"><b>If you are stuck, start here</b>I use a Google Sheet to track people who each need to complete a requirement. I want a Google Apps Script that decides who needs a reminder and writes the emails for me.</p>
+            <h5>Say what you want to happen</h5>
+            <p class="bask">Describe the outcome in your own words. You do not need to know what to ask for technically - that is the AI's job to figure out.</p>
+            <p class="bhint">"I want to stop chasing these people by hand" is a fine opening. Ask it what it would suggest. It may come back with a script, a formula, or something you had not considered - and any of those is a real answer.</p>
+            <p class="bstarter"><b>If you are stuck, start here</b>I use a Google Sheet to track people who each need to complete a requirement. I keep having to check who is overdue and write them the same email by hand. What could I do to make this less manual?</p>
           </li>
           <li>
             <h5>Describe the sheet like it cannot see your screen, because it cannot</h5>
             <p class="bask">Open your copy and look at it. What would a new employee need to know before they could work this list?</p>
-            <p class="bhint">At minimum: the tab name, every column name <strong>in the order they appear</strong>, that row 1 is headers, and what the values in each column can be. Then paste one made-up row so it can see the shape. Use a fake name. This is the step everyone rushes and it is the one that decides whether this works.</p>
-            <p class="bwarn">Column <em>order</em> matters more than you think. If you list them in the wrong order, it will write code that reads the wrong column and the output will still look plausible.</p>
+            <p class="bhint">The tab name, every column <strong>in the order they appear</strong>, what the values mean, and one made-up row so it can see the shape. Use a fake name.</p>
+            <p class="bwarn">Column <em>order</em> matters. Get it wrong and it reads the wrong column - and the output still looks plausible.</p>
           </li>
           <li>
             <h5>Write every rule, including the ones where the answer is "do nothing"</h5>
-            <p class="bask">Before you type anything, look at the Status and Due date columns and answer this out loud at your table: <strong>how many different situations are in this sheet, and what should happen in each one?</strong></p>
-            <p class="bhint">There are five. Two of them are "leave this row alone." A rule that says do nothing is still a rule, and if you do not write it down the AI will invent something helpful instead. Think about: already finished, not due yet, first nudge, second nudge, and the person who has been nudged twice and still has not moved.</p>
-            <p class="bhint">One of the five should not produce an email at all. Decide what should happen to that person instead.</p>
+            <p class="bask">Look at the Status and Due date columns, and work out at your table: <strong>how many different situations are in this sheet, and what should happen in each?</strong></p>
+            <p class="bhint">There are five, and two of them are "leave this row alone." A rule that says do nothing is still a rule - leave it out and the AI invents something helpful instead. One of the five should not produce an email at all.</p>
           </li>
           <li>
             <h5>Say what it must never do</h5>
-            <p class="bask">What is the worst thing this script could do if it misunderstood you? Write the rule that prevents it.</p>
-            <p class="bwarn"><strong>Type the words "create drafts, do not send anything."</strong> That single line is the difference between a mistake and an incident. Everything else on this page is optional. That is not.</p>
-            <p class="bhint">Then the housekeeping: what should it write back into the sheet after it drafts, so it knows next week that this person has already been nudged? And tell it who you are - "add comments explaining each section, because I don't write code" changes what comes back more than any wording trick.</p>
+            <p class="bask">What is the worst thing this could do if it misunderstood you? Write the rule that prevents it.</p>
+            <p class="bwarn"><strong>Say "drafts only, do not send anything."</strong> That line is the difference between a mistake and an incident.</p>
+            <p class="bhint">Then tell it who you are. "Explain what each part does, I don't write code" changes what comes back more than any wording trick.</p>
           </li>
           <li>
             <h5>Send it, then read the answer like an editor</h5>
-            <p class="bask">It is wrong somewhere. That is expected, and it is not a sign you wrote a bad prompt.</p>
-            <p class="bhint">Run it on the practice sheet, compare against the answer key below, and tell Gemini in plain language what it got wrong. Paste the error if there is one. Then go again. The loop is the method.</p>
+            <p class="bask">It will be wrong somewhere. That is expected, not a sign you wrote a bad prompt.</p>
+            <p class="bhint">Compare against the answer key below, tell Gemini what it got wrong in plain language, paste any error, and go again.</p>
           </li>
         </ol>
 
         <div class="selfcheck">
-          <p class="schead">Before you hit send, check that your prompt has all six</p>
+          <p class="schead">Before you send it</p>
           <ul>
-            <li>The words "Google Apps Script"</li>
             <li>The tab name and every column, in order</li>
             <li>One invented sample row</li>
             <li>All five situations, including the two that do nothing</li>
-            <li>"Create drafts, do not send anything"</li>
+            <li>"Drafts only, do not send anything"</li>
             <li>Something that tells it you do not write code</li>
           </ul>
         </div>
@@ -471,7 +473,7 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
       <details class="panel key" id="a1-model-prompt">
         <summary><span class="ptitle">One that works</span><span class="phint">Open it if you stall, or after, to compare</span></summary>
         <div class="pbody">
-          <p>This is a version that produces the right answer. It is not the only one, and it is almost certainly wordier than yours needs to be. If you already wrote your own, read this one for what you left out - that gap is the useful part.</p>
+          <p>One version that produces the right answer - not the only one. If you wrote your own, read this for what you left out.</p>
           <div class="promptbar">
             <strong>A prompt that works</strong>
             <button class="copybtn" type="button" data-copy="prompt">Copy the prompt</button>
@@ -501,25 +503,25 @@ Important requirements:
         </div>
       </details>
 
-      <p class="pullquote">Whichever prompt you sent, you never showed Gemini a single real person. It saw column names, one invented row, and your rules. The code came back, and the code runs where your data already lives.</p>
+      <p class="pullquote">Whichever prompt you sent, Gemini never saw a real person. Column names, one invented row, your rules - and the code runs where your data already lives.</p>
 
-      <p class="panelintro">Open these when you need them. Nothing here is required reading up front.</p>
+      <p class="panelintro">Open these when you need them.</p>
 
       <details class="panel" id="permissions">
         <summary><span class="ptitle">The permission screen</span><span class="phint">Open this when Google asks for access</span></summary>
         <div class="pbody">
-      <p>Everyone hits this. Nothing has gone wrong. Two screens stand between you and a working script.</p>
+      <p>Everyone hits this. Nothing has gone wrong - two screens stand between you and a working script.</p>
 
       <h3>First screen: "Authorization required"</h3>
-      <p>It offers Cancel and Review permissions. Cancel is drawn like the safe button. It is not the one you want. Click <strong>Review permissions</strong> and confirm your EMU account.</p>
+      <p>Cancel is drawn like the safe button. It is not the one you want. Click <strong>Review permissions</strong> and confirm your EMU account.</p>
 
       <h3>Second screen: the permission grant</h3>
-      <p>It names your script and lists what it wants access to. Check <strong>every</strong> box, or click Select all, then continue. A partial grant fails later in a way that looks like broken code.</p>
+      <p>Check <strong>every</strong> box, or click Select all, then continue. A partial grant fails later in a way that looks like broken code.</p>
 
       <div class="callout warn">
         <p><strong>Read that screen before you click.</strong> One line says "Read, compose, send, and permanently delete all your email from Gmail." That should get your attention. Three things are true about it:</p>
         <ul class="plain">
-          <li><strong>The app asking is yours.</strong> Look at the name on that screen. It says <strong>Reminder machine</strong>, because you typed that a minute ago. The thing requesting access to all your email is the code you pasted ninety seconds ago.</li>
+          <li><strong>The app asking is yours.</strong> The name on that screen says <strong>Reminder machine</strong> because you typed it a minute ago. It is the code you just pasted.</li>
           <li><strong>The ask is broad because it has to be.</strong> Apps Script requests Gmail access at the account level. There is no drafts-only permission to grant.</li>
           <li><strong>You can take it back.</strong> Go to <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> any time and revoke it in about four clicks.</li>
         </ul>
@@ -553,11 +555,11 @@ Important requirements:
           </tbody>
         </table>
       </div>
-      <p class="muted" style="margin-top:12px">Three people are skipped for three different reasons. If your script skipped them for the wrong reasons, it still looks like it worked. That is the whole lesson.</p>
+      <p class="muted" style="margin-top:12px">Three people skipped, three different reasons. Skip them for the wrong reasons and it still looks like it worked - that is the whole lesson.</p>
         </div>
       </details>
 
-      <h3 class="stepshead">Round two: make it yours</h3>
+      <h3 class="stepshead">Additional customizations to try</h3>
       <p>Pick one. They get harder as you go down.</p>
       <div class="grid">
         <div class="card"><h3>Change the voice</h3><p>Rewrite the second reminder in your own tone, or add a third one.</p></div>
@@ -574,16 +576,11 @@ Important requirements:
     <div class="wrap">
       <div class="actbanner">
         <p class="actlabel">Activity 2</p>
-        <span class="chip">Pick this or Activity 3</span>
         <span class="chip quiet">No laptop needed</span>
       </div>
       <h2 class="actbig">Turn a mess of meeting notes into who owes what</h2>
-      <p class="lede">You typed fast, the meeting moved faster, and now there is a wall of half-sentences that somebody has to turn into assignments. Usually that somebody is you, three days later, when you can no longer remember whether Kai took the volunteer sheet or handed it off.</p>
-      <p>You are going to hand the mess to an AI and get back a table of owners and deadlines, plus a follow-up email for each person, without it quietly making up the parts you left out.</p>
-      <div class="callout">
-        <p><strong>No laptop, no code, no permission screens.</strong> This one runs entirely in a chat window, so a phone works fine. If your table has one laptop between three people, this is what the other two should be doing.</p>
-      </div>
-
+      <p class="lede">You typed fast, the meeting moved faster, and now there is a wall of half-sentences somebody has to turn into assignments - usually you, three days later, when you can no longer remember who took what.</p>
+      <p>Hand the mess to an AI and get back a table of owners and deadlines, plus a follow-up email each, without it inventing the parts you left out.</p>
       <h3 class="stepshead">Step one: the practice notes</h3>
       <p>Invented committee, invented people. Copy the whole block.</p>
       <div class="promptbar">
@@ -616,11 +613,11 @@ present: Priya, Jordan R, Kai, Devon, Tomas (came in late), Blair on zoom. Avery
 - next mtg tues 9/22</pre>
 
       <h3 class="stepshead">Step two: write the prompt</h3>
-      <p>Read the notes first. Actually read them - the whole activity turns on what you notice in there. Then write your instructions, and paste the notes underneath in the same message.</p>
+      <p>Read the notes first - the whole activity turns on what you notice. Then write your instructions and paste the notes underneath in the same message.</p>
 
       <div class="builder">
         <h4>This one is all about the rules</h4>
-        <p class="builderintro">There is no spreadsheet to describe here, so step two of the method barely applies. Almost all the work is in step three: deciding what counts. Read the notes with a pen and argue about it at your table before you type.</p>
+        <p class="builderintro">No spreadsheet to describe, so almost all the work is in step three: deciding what counts. Read the notes with a pen and argue at your table before you type.</p>
         <ol class="bsteps">
           <li>
             <h5>Name the task</h5>
@@ -676,7 +673,7 @@ present: Priya, Jordan R, Kai, Devon, Tomas (came in late), Blair on zoom. Avery
       <details class="panel key">
         <summary><span class="ptitle">One that works</span><span class="phint">Open it if you stall, or after, to compare</span></summary>
         <div class="pbody">
-          <p>Paste this first, then the notes underneath in the same message. If you wrote your own, read this one for the rules you did not think to write - that gap is where the learning is.</p>
+          <p>Paste this first, then the notes underneath. If you wrote your own, read this for the rules you did not think to write.</p>
           <div class="promptbar">
             <strong>A prompt that works</strong>
             <button class="copybtn" type="button" data-copy="prompt1">Copy the prompt</button>
@@ -736,7 +733,7 @@ Here are the notes:</pre>
         </div>
       </details>
 
-      <h3 class="stepshead">Round two, if you want it</h3>
+      <h3 class="stepshead">Additional customizations to try</h3>
       <div class="grid">
         <div class="card"><h3>Feed it your own</h3><p>Run it on real notes from a meeting you were actually in - as long as the notes are green. Read them first: names of colleagues attached to assignments, anything about a student or a donor, or anything the room agreed to keep quiet all make it red.</p></div>
         <div class="card"><h3>Make it ask</h3><p>Tell it to come back with questions about anything unclear instead of flagging and moving on.</p></div>
@@ -750,15 +747,11 @@ Here are the notes:</pre>
     <div class="wrap">
       <div class="actbanner">
         <p class="actlabel">Activity 3</p>
-        <span class="chip">Pick this or Activity 2</span>
         <span class="chip quiet">Laptop required</span>
       </div>
       <h2 class="actbig">Turn a registration list into a caterer's numbers</h2>
-      <p class="lede"><strong>192 rows.</strong> Seven people signed up twice, ten cancelled, fourteen are on the waitlist, and a dozen wrote something in the dietary box that nobody can turn into a meal. The caterer needs a number by Friday. Everyone who has ever run a campus event has sat down and hand-counted a list like this, and everyone who has done it has gotten it wrong.</p>
-      <p>You are going to build a button that counts it in about four seconds, separates the things that are not actually meal preferences, and refuses to guess at the ones it cannot read.</p>
-      <div class="callout">
-        <p><strong>The length is the point.</strong> With twelve rows you would just count them yourself and you would be right. At 192, hand-counting takes most of an afternoon and you will still miss the person who registered twice with different sessions the second time. This is the size at which the work stops being worth doing by hand - which is exactly the size most real campus lists are.</p>
-      </div>
+      <p class="lede"><strong>192 rows.</strong> Seven people signed up twice, ten cancelled, fourteen are on the waitlist, and a dozen wrote something in the dietary box that nobody can turn into a meal. The caterer needs a number by Friday.</p>
+      <p>You are going to build a button that counts it in about four seconds, separates the things that are not actually meal preferences, and refuses to guess at the ones it cannot read. No emails in this one - just the numbers.</p>
 
       <div class="btn-row" style="margin:22px 0 4px">
         <a class="btn btn-yellow" id="regSheetLink" href="#">Make your copy of the sheet</a>
@@ -767,7 +760,7 @@ Here are the notes:</pre>
       <h3 class="stepshead">The rules it has to follow</h3>
       <ol class="steps" style="margin-top:14px">
         <li>Cancelled rows drop out entirely, even though they still have data in them.</li>
-        <li>Waitlist rows get no meal, no headcount, no email. They go on their own tab.</li>
+        <li>Waitlist rows get no meal and no headcount. They go on their own tab.</li>
         <li>The same email twice is one person. Keep the earliest.</li>
         <li>Only people signed up for Lunch eat lunch.</li>
         <li>Guests eat what their host eats, and they take up a chair.</li>
@@ -775,53 +768,52 @@ Here are the notes:</pre>
         <li>An allergy is not a preference. It goes to a human.</li>
         <li>Accessibility needs are never dietary needs.</li>
       </ol>
-      <p class="muted" style="margin-top:12px">Those eight are the requirements. Turning them into a prompt an AI can actually follow is the activity.</p>
+      <p class="muted" style="margin-top:12px">Turning those eight into a prompt an AI can follow is the activity.</p>
 
       <h3 class="stepshead">Write the prompt</h3>
 
       <div class="builder">
         <h4>The hardest of the three, and the most like real work</h4>
-        <p class="builderintro">You have the rules in plain English above. That is exactly the situation you will be in at your desk: you know your job, and you have to explain it to something that does not. Work down the same five steps. Open the sheet beside you.</p>
+        <p class="builderintro">You have the rules in plain English above. That is the situation you are in at your desk: you know your job and have to explain it to something that does not.</p>
         <ol class="bsteps">
           <li>
-            <h5>Name the task</h5>
-            <p class="bask">Two sentences. Note that you want <strong>two</strong> different things out of this - numbers and emails. Say both.</p>
-            <p class="bstarter"><b>If you are stuck, start here</b>I have a Google Sheet of registrations for a campus open house. I want a Google Apps Script that turns it into the numbers I owe the caterer and the confirmation emails I owe people.</p>
+            <h5>Say what you need</h5>
+            <p class="bask">You need a set of numbers you can hand to dining services. Describe that, and let the AI propose how.</p>
+            <p class="bstarter"><b>If you are stuck, start here</b>I have a Google Sheet of registrations for a campus open house, and I need to give the caterer a meal count. The list is messy and I keep counting it by hand. What is the best way to handle this?</p>
           </li>
           <li>
             <h5>Describe the sheet, and be careful here</h5>
-            <p class="bask">Nine columns this time, and two of them are not simple values. Look at Sessions and at Status before you write.</p>
-            <p class="bhint">Sessions holds a comma-separated list, so say what the possible values are. Status has exactly three states, so name all three. Guests is a number, not a name. Then paste one invented row. Nine columns in the wrong order will produce a script that reads dietary needs out of the accessibility column, and the output will look completely normal.</p>
+            <p class="bask">Nine columns, and two are not simple values. Look at Sessions and Status before you write.</p>
+            <p class="bhint">Sessions holds a comma-separated list, so name the possible values. Status has exactly three states. Guests is a number. Then paste one invented row.</p>
+            <p class="bwarn">Nine columns in the wrong order produces a script that reads dietary needs out of the accessibility column - and the output looks completely normal.</p>
           </li>
           <li>
             <h5>Translate the eight rules into instructions</h5>
-            <p class="bask">Take them one at a time from the list above. The trick is that plain-English rules leave out the part the AI needs most: <strong>where does the leftover go?</strong></p>
-            <p class="bhint">"Waitlist rows get no meal" is only half a rule - it says what not to do. Say where those people go instead. Same for the duplicate registration, the allergy, the dietary note nobody can read, and the accessibility needs. Every one of those needs a destination, or the AI will quietly drop the person or quietly guess.</p>
-            <p class="bwarn">Rule six is the one that separates a good prompt from a bad one. "Sort dietary text into four categories" invites guessing. What you want is: sort it into exactly these four, treat blank and "none" and "N/A" as Standard, and <strong>if it does not clearly belong to one of the four, do not guess - flag the person and leave them out of the counts.</strong> An AI will always rather answer than admit it cannot tell.</p>
+            <p class="bask">One at a time. The trick is that plain-English rules leave out what the AI needs most: <strong>where does the leftover go?</strong></p>
+            <p class="bhint">"Waitlist rows get no meal" only says what not to do. Say where those people go instead - same for the duplicate, the allergy, the unreadable note, the accessibility need. Without a destination, the AI quietly drops the person or quietly guesses.</p>
+            <p class="bwarn">Rule six separates a good prompt from a bad one. Do not just say "sort dietary text into four categories" - add <strong>if it does not clearly fit one of the four, do not guess: flag the person and leave them out of the counts.</strong> An AI would always rather answer than admit it cannot tell.</p>
           </li>
           <li>
             <h5>Say what it must never do</h5>
-            <p class="bask">Same as Activity 1, plus one more that is specific to this sheet.</p>
-            <p class="bhint">Drafts, never sends - that one is not optional. And this time also: <strong>do not write over the Registrations tab.</strong> Ask for new tabs instead. A script that reorganizes your source data in place is a bad afternoon.</p>
+            <p class="bask">This one writes no emails at all, so the guardrail is about your data instead.</p>
+            <p class="bwarn"><strong>Say "do not write over the Registrations tab."</strong> Ask for new tabs. A script that reorganizes your source data in place is a bad afternoon.</p>
           </li>
           <li>
             <h5>Decide what "done" looks like before you look at the output</h5>
-            <p class="bask">You cannot count 192 rows by hand, so you cannot check this one the way you checked Activity 1. Check the <em>relationships</em> instead.</p>
-            <p class="bhint">Write these down before you run it: meals counted plus meals unresolved should equal the lunch headcount exactly. Gmail drafts should equal unique registered people. Nobody cancelled and nobody on the waitlist should appear anywhere except their own tab. If any of those does not hold, something upstream is wrong no matter how reasonable the numbers look.</p>
-            <p class="bwarn">This is the lesson that actually transfers. At real scale you will never verify the whole output - so you build in checks that would break loudly if the logic were wrong, and you check <em>those</em>.</p>
+            <p class="bask">You cannot count 192 rows by hand, so you cannot check this the way you checked Activity 1. Check the <em>relationships</em> instead.</p>
+            <p class="bhint">Meals counted plus meals unresolved should equal the lunch headcount exactly. Nobody cancelled or waitlisted should appear anywhere but their own tab. If either fails, something upstream is wrong however sensible the numbers look.</p>
+            <p class="bwarn">This is the lesson that transfers. At real scale you never verify the whole output - you build in checks that break loudly, and check those.</p>
           </li>
         </ol>
 
         <div class="selfcheck">
-          <p class="schead">Before you send it, check that you covered</p>
+          <p class="schead">Before you send it</p>
           <ul>
-            <li>Both outputs: the counts and the emails</li>
             <li>All nine columns, in order, plus what Sessions and Status can contain</li>
             <li>One invented sample row</li>
             <li>A destination for every person who does not fit a clean category</li>
             <li>The instruction not to guess at unreadable dietary text</li>
             <li>Guests eat, and guests take up a chair</li>
-            <li>"Create drafts, do not send anything"</li>
             <li>"Do not write over the Registrations tab"</li>
           </ul>
         </div>
@@ -830,12 +822,12 @@ Here are the notes:</pre>
       <details class="panel key">
         <summary><span class="ptitle">One that works</span><span class="phint">Open it if you stall, or after, to compare</span></summary>
         <div class="pbody">
-          <p>Long, because the job is. Notice how much of it is telling the AI what to do with the things that do not fit - that is not padding, that is the whole job.</p>
+          <p>Long, because the job is. Notice how much of it is telling the AI what to do with the things that do not fit.</p>
           <div class="promptbar">
             <strong>A prompt that works</strong>
             <button class="copybtn" type="button" data-copy="prompt2">Copy the prompt</button>
           </div>
-          <pre id="prompt2">I have a Google Sheet of registrations for a campus open house. I want a Google Apps Script that turns it into the numbers I owe the caterer and the confirmation emails I owe people.
+          <pre id="prompt2">I have a Google Sheet of registrations for a campus open house. I want a Google Apps Script that turns it into the numbers I owe the caterer.
 
 The sheet has one tab called Registrations with these columns in this order: Name, Email, Role, Registered on, Sessions, Dietary, Accessibility, Guests, Status. Row 1 is headers. Sessions is a comma-separated list drawn from Morning, Lunch, and Afternoon. Guests is a number. Status is one of Registered, Waitlist, or Cancelled.
 
@@ -844,7 +836,7 @@ Avery Nolan | avery.nolan@example.com | Staff | 2026-08-01 | Morning, Lunch | Ve
 
 Work through every row with these rules:
 - Ignore Cancelled rows completely.
-- Waitlist rows get no meal, no headcount, and no confirmation email. List them on a tab called Waitlist.
+- Waitlist rows get no meal and no headcount. List them on a tab called Waitlist.
 - If the same email appears more than once, keep the earliest registration and put the later one on a tab called Check this.
 - Only count a meal for someone whose Sessions include Lunch.
 - Each guest eats the same meal as the person who brought them and counts toward the room.
@@ -855,9 +847,8 @@ Work through every row with these rules:
 Then build a tab called Counts showing meals by type, a headcount for each session including guests, and how many meals are still unresolved.
 
 Important requirements:
-- Create Gmail drafts for the confirmation emails. Do not send anything.
-- Each email names the sessions that person signed up for, and their meal if they are coming to lunch.
-- Do not write over the Registrations tab.
+- This script sends no email and creates no drafts. It only reads and counts.
+- Do not write over the Registrations tab. Put everything on new tabs.
 - When it finishes, show me a popup with the meal counts.
 - Add comments explaining what each section does, because I don&#x27;t write code.</pre>
         </div>
@@ -865,7 +856,7 @@ Important requirements:
 
       <p>From there it is the same path as Activity 1: <strong>Extensions &rsaquo; Apps Script</strong>, rename the project, delete what is in the editor, paste, save, reload the sheet. If the permission screens catch you off guard, <a href="#permissions">the walkthrough is up in Activity 1</a>.</p>
 
-      <p class="panelintro">Try it before you open these. Both of the take-home activities are rigged to produce an answer that looks right and is not.</p>
+      <p class="panelintro">Try it before you open these. This one is rigged to produce an answer that looks right and is not.</p>
 
       <details class="panel key">
         <summary><span class="ptitle">What a correct script produces</span><span class="phint">Answer key - try it first</span></summary>
@@ -892,63 +883,71 @@ Important requirements:
             <tr><td>Morning headcount</td><td>156</td><td>Guests included</td></tr>
             <tr><td>Lunch headcount</td><td>174</td><td>154 meals decided, 20 pending</td></tr>
             <tr><td>Afternoon headcount</td><td>78</td><td>Guests included</td></tr>
-            <tr><td>Waitlist tab</td><td>14</td><td>No meal, no headcount, no email</td></tr>
+            <tr><td>Waitlist tab</td><td>14</td><td>No meal, no headcount</td></tr>
             <tr><td>Accessibility tab</td><td>23</td><td>Never dietary needs</td></tr>
             <tr><td>Check this tab</td><td>28</td><td>7 duplicate registrations + 9 allergies + 12 unreadable dietary notes</td></tr>
-            <tr><td>Gmail drafts</td><td>161</td><td>One per unique registered person</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="keyline"><strong>The three relationships that have to hold.</strong> 154 counted plus 20 unresolved equals the lunch headcount of 174. Gmail drafts equal unique people, 161 both. And 192 rows minus 10 cancelled, 14 waitlisted, and 7 duplicates leaves exactly 161. Check those three before you look at anything else - if one of them is off, the individual numbers are meaningless no matter how sensible they look.</p>
-      <p class="keyline">Named people worth spot-checking: <strong>Devon Marsh</strong> appears twice and should count once, with an unreadable diet that lands on Check this. <strong>Noor Haddad</strong> has a nut allergy and is not coming to lunch - two separate traps in one row. <strong>Sam Okonkwo</strong> cancelled. <strong>Riley Chen</strong> is waitlisted with "veg" in the dietary box that must not reach the counts.</p>
+      <p class="keyline"><strong>Check these two first.</strong> 154 counted plus 20 unresolved equals the lunch headcount of 174. And 192 rows minus 10 cancelled, 14 waitlisted and 7 duplicates leaves exactly 161. If either is off, the individual numbers are meaningless however sensible they look.</p>
+      <p class="keyline">Worth spot-checking: <strong>Devon Marsh</strong> appears twice and counts once. <strong>Noor Haddad</strong> has a nut allergy and is not coming to lunch - two traps in one row. <strong>Sam Okonkwo</strong> cancelled. <strong>Riley Chen</strong> is waitlisted with "veg" that must not reach the counts.</p>
         </div>
       </details>
 
       <details class="panel">
         <summary><span class="ptitle">Where it goes wrong</span><span class="phint">Seven ways, and what each one means</span></summary>
         <div class="pbody">
-      <p>At this size none of these announce themselves. The output looks like a tidy table of numbers either way, which is the entire reason the relationships above matter more than the individual figures.</p>
+      <p>None of these announce themselves. The output looks like a tidy table of numbers either way.</p>
       <ul class="plain">
-        <li><strong>Around 119 meals instead of 154.</strong> It ignored the Guests column. Thirty-five people show up expecting lunch and there is no plate for them, and you find out at the event.</li>
-        <li><strong>More than 154, and counted plus unresolved no longer equals 174.</strong> Waitlisted people got meals, or the ten cancellations got counted anyway. Both are invisible in the totals alone.</li>
-        <li><strong>168 unique people instead of 161.</strong> It never deduplicated. Seven people are getting two confirmation emails each and two plates each.</li>
-        <li><strong>Zero in the unresolved column.</strong> The most dangerous possible output. It means the AI decided that "same as last time," "ask me," and "TBD" were all Standard rather than admitting it could not tell. Twelve people get the wrong meal and nothing anywhere looks broken.</li>
-        <li><strong>Allergies folded into the meal counts.</strong> Nine people with allergies got sorted into a category instead of going to a human. Noor Haddad is not even coming to lunch, which makes that row two mistakes stacked.</li>
-        <li><strong>Accessibility needs showing up as diets.</strong> "Wheelchair access needed" and "ASL interpreter" appear in the food counts. It read the wrong column, and it did so without hesitating.</li>
-        <li><strong>More than 161 drafts.</strong> Somebody who cancelled just got a confirmation email. At twelve rows you would catch that. At 192 you will not.</li>
+        <li><strong>Zero in the unresolved column.</strong> The most dangerous output. The AI decided "same as last time," "ask me" and "TBD" were all Standard rather than admitting it could not tell. Twelve people get the wrong meal and nothing looks broken.</li>
+        <li><strong>Around 119 meals instead of 154.</strong> It ignored the Guests column. Thirty-five people arrive expecting lunch and there is no plate.</li>
+        <li><strong>Counted plus unresolved no longer equals 174.</strong> Waitlisted people got meals, or the ten cancellations got counted. Invisible in the totals alone.</li>
+        <li><strong>168 unique people instead of 161.</strong> It never deduplicated - seven people counted twice.</li>
+        <li><strong>Allergies folded into the meal counts.</strong> Nine people who should have gone to a human got sorted into a category instead.</li>
+        <li><strong>Accessibility needs showing up as diets.</strong> "Wheelchair access needed" in the food counts. It read the wrong column, without hesitating.</li>
       </ul>
         </div>
       </details>
 
-      <h3 class="stepshead">Round two, if you want it</h3>
+      <h3 class="stepshead">Additional customizations to try</h3>
       <div class="grid">
         <div class="card"><h3>A sheet for the door</h3><p>Add a printable check-in list, alphabetical, with a box to tick and guests shown under their host.</p></div>
         <div class="card"><h3>Nametags</h3><p>Have it generate a nametag sheet, names large enough to read from four feet away.</p></div>
-        <div class="card"><h3>Tell the caterer directly</h3><p>One email to dining with the counts and nothing else. No table, no preamble.</p></div>
-        <div class="card"><h3>Handle late signups</h3><p>Make it safe to run twice, so people who registered since the last run get their email and nobody gets a second one.</p></div>
-        <div class="card"><h3>Work the waitlist</h3><p>Given a cap you set, promote people off the waitlist in registration order and email them.</p></div>
-        <div class="card"><h3>Ask about the unreadable ones</h3><p>Instead of just flagging Devon, have it draft the email that asks him what he meant.</p></div>
+        <div class="card"><h3>Tell the caterer directly</h3><p>Have it draft <em>one</em> email to dining with the counts and nothing else. No table, no preamble.</p></div>
+        <div class="card"><h3>Handle late signups</h3><p>Make it safe to run twice, so the counts refresh without double-counting anyone.</p></div>
+        <div class="card"><h3>Work the waitlist</h3><p>Given a cap you set, show who would come off the waitlist in registration order and what that does to the meal counts.</p></div>
+        <div class="card"><h3>Ask about the unreadable ones</h3><p>Have it draft the one email that asks Devon what "same as last time" meant.</p></div>
       </div>
     </div>
   </section>
 
   <section class="band band-soft" id="next">
     <div class="wrap">
-      <p class="section-header">The rule that holds for all of it</p>
-      <h2>Notice what the AI never saw</h2>
-      <p class="lede">In all three of these, the AI got column names, invented rows, and a set of rules. Not one real student, applicant, donor, or colleague. Not one real number. In the spreadsheet ones it never touched the data at all: it wrote code, and the code ran inside your Drive, where the data already lived.</p>
-      <p>That is the difference between using these tools at work and getting a phone call from IT. It is worth saying out loud every time, which is why it is at the top of this page and again at the bottom.</p>
-      <p>So when you go build your own version of this on Thursday, the question to ask before you paste anything is the one from the top of the page: <strong>is this green?</strong> If you have to think about it for more than a second, it is red, and you almost certainly do not need it in there anyway. Send the shape, not the record.</p>
+      <p class="section-header">Take these with you</p>
+      <h2>Three things</h2>
 
-      <h2 style="margin-top:40px">The part that matters is not the script</h2>
-      <p>You could have copied three prompts today and left with three working scripts and nothing else. The reason the page made you write them yourself is that <strong>your actual workflow is not on this page.</strong> Nobody is going to hand you a prompt for it. What transfers is the five moves - name it, describe it like they cannot see your screen, write every rule including the do-nothing ones, say what it must never do, then test it against an answer you already know.</p>
-      <p>So: what is the list you actually chase at work? Incomplete files, missing forms, unsigned documents, overdue trainings, unreturned equipment. It is the same shape as what you just built. Tell me about it on the form, and I will help you build it.</p>
-      <p class="muted">And if you ran out of time in here - the page is not going anywhere. Same URL tonight, next week, in March.</p>
-      <div class="btn-row" style="margin-top:22px">
+      <ol class="takeaways">
+        <li>
+          <h3>Send the shape, not the record</h3>
+          <p>The AI never saw a real person or a real number today. It got column names, invented rows and rules - and the code it wrote ran in your Drive, where the data already lived. Before you paste anything at your desk, ask the one question: <strong>is this green?</strong> If you have to think about it, it's red.</p>
+        </li>
+        <li>
+          <h3>The method is the part that transfers</h3>
+          <p>Nobody will hand you a prompt for <em>your</em> workflow. The five moves are what you take back: name it, describe it like they cannot see your screen, write every rule including the do-nothing ones, say what it must never do, then test against an answer you already know.</p>
+          <p class="tksub">Then keep iterating. The first version is never the one that works.</p>
+        </li>
+        <li>
+          <h3>Send me the one that bugs you</h3>
+          <p>Incomplete files, missing forms, unsigned documents, overdue trainings, unreturned equipment - same shape as what you just built. Put it on the form and I will help you build it.</p>
+        </li>
+      </ol>
+
+      <div class="btn-row" style="margin-top:26px">
         <a class="btn btn-yellow" id="formLink" href="#">Submit your own workflow</a>
-        <a class="btn btn-outline" id="cardLink" href="workflow-card.pdf">Printable card (PDF)</a>
+        <a class="btn btn-outline" id="handoutLinkFoot" href="handout-workflow-overview.pdf">The workflow handout (PDF)</a>
         <a class="btn btn-outline" href="#top">Back to the top</a>
       </div>
+      <p class="muted" style="margin-top:18px">Ran out of time? The page is not going anywhere - same link tonight, next week, in March.</p>
     </div>
   </section>
 
@@ -958,7 +957,7 @@ Important requirements:
 <footer>
   <div class="wrap">
     <span class="emu-mark ftr" role="img" aria-label="Eastern Mennonite University"></span>
-    <p><strong>AI Work Sessions</strong> &middot; Faculty and Staff Conference, Wednesday, August 19</p>
+    <p><strong>EMU AI Workshop</strong> &middot; Faculty and Staff Conference, Wednesday, August 19</p>
     <p>Questions, or want help with a workflow of your own? Find Luke Litwiller in Undergraduate Admissions.</p>
     <p class="ftag"><span style="font-weight:300">LEAD</span> <span style="font-weight:700">TOGETHER</span></p>
   </div>
@@ -974,8 +973,7 @@ const CONFIG = {
   sheetCopyLink   : "https://docs.google.com/spreadsheets/d/1XzlKYDG-oD6dNsUAUNBg_HNALcxho2MBcrWZcL294DE/copy",
   regSheetCopyLink: "https://docs.google.com/spreadsheets/d/1fdgyVZmAbphKhjq3XDJ3dp-wg5SKzcjL2Spx-jdq-a0/copy",
   intakeFormLink  : "https://docs.google.com/forms/d/e/1FAIpQLSesLi2_2Onj8dbkhLBr98RWqL-MP6nBUbn_OHy7_bD8aJRCQw/viewform",
-  cardPdf         : "workflow-card.pdf",
-  handoutPdf      : "handout-workflow-teardown.pdf"
+  handoutPdf      : "handout-workflow-overview.pdf"
 };
 
 (function () {
@@ -990,8 +988,8 @@ const CONFIG = {
   apply("sheetLink",    CONFIG.sheetCopyLink);
   apply("regSheetLink", CONFIG.regSheetCopyLink);
   apply("formLink",     CONFIG.intakeFormLink);
-  apply("cardLink",     CONFIG.cardPdf);
-  apply("handoutLink",  CONFIG.handoutPdf);
+  apply("handoutLink",     CONFIG.handoutPdf);
+  apply("handoutLinkFoot", CONFIG.handoutPdf);
   if (unset.length) document.getElementById("setupFlag").style.display = "block";
 
   /* ── copy buttons ─────────────────────────────────────────── */
