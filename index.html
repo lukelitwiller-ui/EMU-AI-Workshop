@@ -261,6 +261,316 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
 .takeaways p{margin:0;font-size:1.02rem;line-height:1.6}
 .takeaways p.tksub{margin-top:8px;font-size:.95rem;color:var(--ink-soft)}
 @media(max-width:640px){.takeaways>li{padding-left:52px}.takeaways>li:before{width:38px;height:38px;font-size:1.1rem}}
+
+/* ══════════════════════════════════════════════════════════════
+   GUIDED WALKTHROUGH  ("tour")
+   A click-through lightbox. Two tours: page orientation, and the
+   Activity 1 path. All screens are drawn in CSS - no images.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── launcher button ──────────────────────────────────────── */
+.tourbtn{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid var(--line);background:#fff;color:var(--emu-blue-dark);
+  font-family:var(--font-sans);font-size:.94rem;font-weight:700;
+  padding:11px 18px;border-radius:5px;cursor:pointer;line-height:1.2;
+  transition:border-color .15s,background .15s,transform .06s;
+}
+.tourbtn:hover{border-color:var(--emu-blue);background:var(--emu-blue-light)}
+.tourbtn:active{transform:translateY(1px)}
+.tourbtn .tplay{
+  flex:none;width:19px;height:19px;border-radius:50%;
+  background:var(--emu-yellow);position:relative;
+}
+.tourbtn .tplay:after{
+  content:"";position:absolute;top:50%;left:52%;transform:translate(-50%,-50%);
+  border-left:6px solid var(--emu-blue-dark);
+  border-top:4px solid transparent;border-bottom:4px solid transparent;
+}
+.tourbtn.onblue{
+  background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.42);color:#fff;
+}
+.tourbtn.onblue:hover{background:rgba(255,255,255,.19);border-color:#fff}
+
+/* ── overlay shell ────────────────────────────────────────── */
+#tour[hidden]{display:none}
+#tour{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.tour-back{position:absolute;inset:0;background:rgba(16,44,82,.72);backdrop-filter:blur(2px)}
+.tour-modal{
+  position:relative;width:100%;max-width:790px;max-height:94vh;
+  background:#fff;border-radius:9px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 26px 70px rgba(16,32,46,.44);
+  animation:tourIn .2s ease-out;
+}
+@keyframes tourIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .tour-modal{animation:none}
+  .mk-blink{animation:none !important}
+}
+
+/* ── head ─────────────────────────────────────────────────── */
+.tour-head{
+  flex:none;display:flex;align-items:center;gap:14px;
+  padding:15px 20px;border-bottom:1px solid var(--line);background:#fff;
+}
+.tour-kicker{
+  font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--emu-blue);
+}
+.tour-count{
+  margin-left:auto;font-size:.82rem;color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.tour-x{
+  flex:none;width:32px;height:32px;border:1px solid var(--line);background:#fff;
+  border-radius:5px;cursor:pointer;color:var(--ink-soft);font-size:1.15rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.tour-x:hover{background:#F4F8FC;color:var(--ink);border-color:var(--emu-blue)}
+
+/* ── scrolling body ───────────────────────────────────────── */
+.tour-body{overflow-y:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+.tour-stage{
+  background:linear-gradient(180deg,#EEF4FA 0%,#E3ECF6 100%);
+  padding:26px 22px;display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--line);min-height:200px;
+}
+.tour-copy{padding:22px 26px 26px}
+.tour-copy h3{
+  font-family:var(--font-serif);font-size:1.3rem;line-height:1.28;
+  margin:0 0 9px;color:var(--emu-blue-dark);font-weight:400;
+}
+.tour-copy p{margin:0 0 11px;font-size:1rem;color:var(--ink);line-height:1.6}
+.tour-copy p:last-child{margin-bottom:0}
+.tour-note{
+  margin-top:14px;border-left:3px solid var(--emu-yellow);
+  background:#FFF9EC;padding:11px 15px;border-radius:0 4px 4px 0;
+}
+.tour-note p{font-size:.93rem;margin:0;color:#5A4415}
+
+/* ── foot / controls ──────────────────────────────────────── */
+.tour-foot{
+  flex:none;display:flex;align-items:center;gap:14px;
+  padding:14px 20px;border-top:1px solid var(--line);background:#FAFCFE;
+}
+.tour-dots{display:flex;gap:7px;flex-wrap:wrap;flex:1 1 auto}
+.tour-dots button{
+  width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid #B9CBE0;background:#D9E5F1;
+}
+.tour-dots button:hover{border-color:var(--emu-blue)}
+.tour-dots button[aria-current="true"]{background:var(--emu-blue);border-color:var(--emu-blue);transform:scale(1.25)}
+.tour-nav{display:flex;gap:9px;flex:none}
+.tour-nav button{
+  font-family:var(--font-sans);font-size:.9rem;font-weight:700;
+  padding:9px 17px;border-radius:5px;cursor:pointer;border:1px solid var(--line);
+  background:#fff;color:var(--emu-blue-dark);line-height:1.2;
+}
+.tour-nav button:hover:not(:disabled){border-color:var(--emu-blue);background:var(--emu-blue-light)}
+.tour-nav button:disabled{opacity:.38;cursor:default}
+.tour-nav .tnext{background:var(--emu-yellow);border-color:var(--emu-yellow);color:var(--emu-blue-dark)}
+.tour-nav .tnext:hover{background:#E39A13;border-color:#E39A13}
+
+@media (max-width:640px){
+  #tour{padding:0}
+  .tour-modal{max-width:none;max-height:100vh;height:100%;border-radius:0}
+  .tour-stage{padding:16px 12px}
+  .tour-copy{padding:18px 18px 22px}
+  .tour-copy h3{font-size:1.14rem}
+  .tour-foot{flex-wrap:wrap}
+  .tour-dots{order:2;width:100%;justify-content:center}
+  .tour-nav{order:1;width:100%}
+  .tour-nav button{flex:1}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOCK UI  (.mk-*)  - drawn screens, no screenshots
+   ══════════════════════════════════════════════════════════════ */
+.mk{
+  width:100%;max-width:560px;background:#fff;border:1px solid #C6D5E5;
+  border-radius:7px;overflow:hidden;font-size:12px;line-height:1.45;
+  color:#25313F;box-shadow:0 6px 20px rgba(16,44,82,.15);text-align:left;
+  font-family:var(--font-sans);
+}
+.mk-bar{
+  display:flex;align-items:center;gap:7px;padding:7px 10px;
+  background:#F1F5F9;border-bottom:1px solid #DAE4EF;
+}
+.mk-dots{display:flex;gap:4px;flex:none}
+.mk-dots i{width:8px;height:8px;border-radius:50%;background:#CFDBE7;display:block}
+.mk-title{
+  font-size:11px;color:#5D6E80;font-weight:600;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.mk-title b{color:#25313F;font-weight:700}
+
+/* menu strip */
+.mk-menu{
+  display:flex;flex-wrap:wrap;gap:4px 15px;padding:6px 12px;background:#fff;
+  border-bottom:1px solid #E6EDF4;font-size:11.5px;color:#4A5A6B;position:relative;
+}
+.mk-menu span{white-space:nowrap}
+.mk-menu span.act{
+  background:#E6EEF9;color:#0056B8;font-weight:700;
+  border-radius:3px;padding:0 6px;margin:0 -6px;
+}
+.mk-menu span.new{
+  color:#0056B8;font-weight:800;
+}
+
+/* dropdown */
+.mk-dropwrap{display:flex;justify-content:flex-end;background:#fff}
+.mk-drop{
+  margin:0;width:190px;max-width:70%;background:#fff;border:1px solid #DAE4EF;
+  border-radius:0 0 5px 5px;border-top:0;box-shadow:0 8px 20px rgba(16,44,82,.17);
+  padding:5px 0;font-size:11.5px;
+}
+.mk-drop b{display:block;padding:5px 12px;font-weight:400;color:#3C4A59}
+.mk-drop b.on{background:#FFF4DC;color:#16202E;font-weight:800;box-shadow:inset 3px 0 0 #F3A71E}
+.mk-drop b.dim{color:#93A2B2}
+
+/* spreadsheet grid */
+.mk-grid{width:100%;border-collapse:collapse;font-size:10.5px;table-layout:fixed}
+.mk-grid th,.mk-grid td{
+  border:1px solid #E2E9F1;padding:4px 6px;text-align:left;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mk-grid th{background:#F4F7FA;font-weight:700;color:#3C4A59;font-size:10px}
+.mk-grid td{color:#4A5A6B}
+.mk-grid tr.hi td{background:#FFF9EC}
+.mk-grid .num{width:22px;background:#F4F7FA;color:#93A2B2;text-align:center;font-weight:700}
+
+/* code editor */
+.mk-code{
+  background:#1E293B;color:#C7D6E6;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:10.5px;line-height:1.6;padding:11px 13px;white-space:pre;overflow:hidden;
+}
+.mk-code .c{color:#7F94AB;font-style:italic}
+.mk-code .k{color:#F3A71E}
+.mk-code .s{color:#8FD19E}
+.mk-code.empty{color:#5A6B80;font-style:italic}
+
+/* chat / gemini */
+.mk-chat{padding:12px 13px;background:#fff}
+.mk-msg{
+  border:1px solid #E2E9F1;border-radius:9px;padding:9px 11px;
+  font-size:11px;color:#3C4A59;margin-bottom:9px;background:#F8FBFD;
+}
+.mk-msg.you{background:#EAF1FB;border-color:#D3E1F4}
+.mk-msg .who{
+  display:block;font-size:9.5px;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:#7488A0;margin-bottom:5px;
+}
+.mk-input{
+  display:flex;align-items:center;gap:9px;border:1px solid #C6D5E5;
+  border-radius:22px;padding:8px 8px 8px 14px;font-size:11px;color:#8A9AAB;background:#fff;
+}
+.mk-input .send{
+  margin-left:auto;flex:none;width:24px;height:24px;border-radius:50%;
+  background:#0056B8;position:relative;
+}
+.mk-input .send:after{
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  border-left:7px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;
+}
+
+/* project-name / toolbar row inside apps script */
+.mk-row{
+  display:flex;align-items:center;gap:9px;padding:7px 12px;
+  border-bottom:1px solid #E6EDF4;font-size:11.5px;background:#fff;
+}
+.mk-field{
+  border:1px solid #C6D5E5;border-radius:4px;padding:4px 9px;
+  font-size:11px;color:#25313F;background:#fff;font-weight:700;
+}
+.mk-icon{
+  border:1px solid #DAE4EF;border-radius:4px;padding:3px 9px;
+  font-size:11px;color:#4A5A6B;background:#F8FBFD;font-weight:600;
+}
+.mk-push{margin-left:auto}
+
+/* toast / popup */
+.mk-toast{
+  margin:11px 13px;border:1px solid #C6D5E5;border-radius:6px;background:#fff;
+  padding:11px 13px;font-size:11px;box-shadow:0 5px 14px rgba(16,44,82,.13);
+}
+.mk-toast p{margin:0 0 5px;color:#3C4A59}
+.mk-toast p:last-child{margin:0}
+.mk-toast b{color:#16202E}
+
+/* generic bits */
+.mk-note{padding:9px 13px;font-size:11px;color:#5D6E80;background:#F8FBFD}
+.mk-hl{
+  outline:2px solid #F3A71E;outline-offset:1px;border-radius:3px;
+  box-shadow:0 0 0 4px rgba(243,167,30,.26);
+}
+.mk-blink{animation:mkPulse 1.6s ease-in-out infinite}
+@keyframes mkPulse{0%,100%{box-shadow:0 0 0 4px rgba(243,167,30,.26)}50%{box-shadow:0 0 0 8px rgba(243,167,30,.10)}}
+
+/* numbered callout pin */
+.mk-pin{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:17px;height:17px;border-radius:50%;background:#0056B8;color:#fff;
+  font-size:10px;font-weight:800;vertical-align:middle;margin-right:5px;
+}
+
+/* the mini page-map used by the orientation tour */
+.mk-page{padding:12px;background:#fff}
+.mk-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.mk-card{
+  border:1px solid #DAE4EF;border-radius:5px;padding:8px 9px;background:#FAFCFE;
+}
+.mk-card.on{border-color:#F3A71E;background:#FFF9EC;box-shadow:0 0 0 3px rgba(243,167,30,.2)}
+.mk-card u{
+  display:block;text-decoration:none;font-size:9px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:#7488A0;margin-bottom:4px;
+}
+.mk-card b{display:block;font-size:10.5px;color:#16202E;line-height:1.35;font-weight:700}
+.mk-card i{display:block;font-style:normal;font-size:9.5px;color:#7488A0;margin-top:4px}
+@media (max-width:520px){.mk-cards{grid-template-columns:1fr}}
+
+/* mini sticky-nav mock */
+.mk-nav{
+  display:flex;align-items:center;gap:11px;padding:7px 11px;background:#102C52;
+  font-size:10.5px;color:#B9CBE0;overflow:hidden;
+}
+.mk-nav em{
+  font-style:normal;font-size:9px;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:#F3A71E;flex:none;
+}
+.mk-nav span{white-space:nowrap}
+.mk-nav span.on{color:#fff;font-weight:800;box-shadow:inset 0 -2px 0 #F3A71E;padding-bottom:2px}
+
+/* mini closed-panel mock */
+.mk-panels{padding:11px;background:#fff;display:flex;flex-direction:column;gap:7px}
+.mk-panel{
+  display:flex;align-items:center;gap:8px;border:1px solid #DAE4EF;border-radius:5px;
+  padding:8px 10px;background:#FAFCFE;font-size:11px;
+}
+.mk-panel .tri{
+  flex:none;width:15px;height:15px;border-radius:50%;background:#0056B8;color:#fff;
+  font-size:10px;font-weight:800;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
+.mk-panel.key .tri{background:#F3A71E;color:#3A2600}
+.mk-box{flex:none;width:11px;height:11px;border:2px solid #0056B8;border-radius:2px;background:#fff}
+.mk-panel b{color:#16202E;font-weight:700}
+.mk-panel i{font-style:normal;color:#7488A0;font-size:10px;margin-left:auto;text-align:right}
+.mk-panel.key{border-color:#F3A71E;background:#FFF9EC}
+
+/* traffic lights mini */
+.mk-lights{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:11px;background:#fff}
+.mk-light{border-radius:5px;padding:8px 9px;font-size:10px;line-height:1.4}
+.mk-light b{display:block;font-size:10px;font-weight:800;margin-bottom:3px}
+.mk-light.g{background:#EEF8F0;border:1px solid #C6E4CD}.mk-light.g b{color:#2C6B3B}
+.mk-light.y{background:#FFF9EC;border:1px solid #F0DDB4}.mk-light.y b{color:#8A6414}
+.mk-light.r{background:#FCEEEE;border:1px solid #EFC9C9}.mk-light.r b{color:#963232}
+@media (max-width:520px){.mk-lights{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -296,6 +606,11 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
           <span class="acttitle">A registration list into a caterer's numbers</span>
           <span class="actneed">Laptop required &middot; the hardest of the three</span>
         </a>
+      </div>
+      <div style="margin:22px 0 0">
+        <button type="button" class="tourbtn onblue" data-tour="orientation">
+          <span class="tplay" aria-hidden="true"></span>New here? See how this page works &middot; 6 steps
+        </button>
       </div>
     </div>
   </div>
@@ -415,6 +730,11 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
       <div class="btn-row" style="margin:24px 0 4px">
         <a class="btn btn-yellow" id="sheetLink" href="#">Make your copy of the sheet</a>
         <a class="btn btn-outline" href="#a1-prompt">Jump to writing the prompt</a>
+      </div>
+      <div style="margin:18px 0 0">
+        <button type="button" class="tourbtn" data-tour="activity1">
+          <span class="tplay" aria-hidden="true"></span>Watch the whole path first &middot; 10 steps, about two minutes
+        </button>
       </div>
 
       <ol class="steps" style="margin-top:38px">
@@ -1066,6 +1386,356 @@ const CONFIG = {
   }, { passive: true });
   mark();
 })();
+
+/* ─────────────────────────────────────────────────────────────
+   GUIDED WALKTHROUGH
+   Two click-through tours. Every screen is drawn in CSS - there
+   are no screenshots to go stale when Google reskins something.
+
+   To edit a step: find it in TOURS below. Each step is
+   { title, body, note, frame } - frame is the drawn screen.
+   ───────────────────────────────────────────────────────────── */
+(function () {
+
+  /* ── small builders so the frames below stay readable ────── */
+  function win(title, inner) {
+    return '<div class="mk">' +
+      '<div class="mk-bar"><span class="mk-dots"><i></i><i></i><i></i></span>' +
+      '<span class="mk-title">' + title + '</span></div>' + inner + '</div>';
+  }
+  function sheetsMenu(openItem, extraClass) {
+    var items = ['File', 'Edit', 'View', 'Insert', 'Format', 'Data', 'Tools', 'Extensions', 'Help'];
+    var out = '';
+    for (var i = 0; i < items.length; i++) {
+      var cls = (items[i] === openItem) ? ' class="act ' + (extraClass || '') + '"' : '';
+      out += '<span' + cls + '>' + items[i] + '</span>';
+    }
+    return '<div class="mk-menu">' + out + '</div>';
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     TOUR 1 - how this page works
+     ══════════════════════════════════════════════════════════ */
+  var ORIENT = {
+    kicker: 'How this page works',
+    steps: [
+
+    { title: 'Everyone starts in the same place',
+      body: 'Activity 1 is the one the whole room builds together, so start there even if another one sounds more like your job. Activities 2 and 3 are a pick-one after that - you are not expected to finish all three.',
+      note: 'Activity 2 is the only one that works on a phone. Activities 1 and 3 need a laptop, because the Extensions menu does not exist in the Sheets mobile app. If you came without one, pair up.',
+      frame: win('EMU AI Workshop',
+        '<div class="mk-page"><div class="mk-cards">' +
+        '<div class="mk-card on"><u>Activity 1 &middot; start here</u><b>A reminder system from a spreadsheet</b><i>Laptop required</i></div>' +
+        '<div class="mk-card"><u>Activity 2</u><b>Messy meeting notes into who owes what</b><i>Works on a phone</i></div>' +
+        '<div class="mk-card"><u>Activity 3</u><b>A registration list into meal counts</b><i>Laptop &middot; the hardest</i></div>' +
+        '</div></div>') },
+
+    { title: 'Read the traffic lights before you type anything',
+      body: 'Every tool used today is the free, public version, which means whatever you type into it leaves EMU. The section at the top of the page sorts what you might paste into three buckets. It is short. Read it once and the rest of the day is easy.',
+      note: 'Nothing you build today needs to break the red rule. You hand over the shape of your data - column names and one invented row - and it hands back instructions that run where your real data already lives.',
+      frame: win('What goes in the box',
+        '<div class="mk-lights">' +
+        '<div class="mk-light g"><b>Green &middot; go ahead</b>Column names. Fake examples. Anything already public.</div>' +
+        '<div class="mk-light y"><b>Yellow &middot; think first</b>Internal, but not about a person and not confidential.</div>' +
+        '<div class="mk-light r"><b>Red &middot; never</b>Anything about a real person. Ever. Anything confidential to EMU.</div>' +
+        '</div>') },
+
+    { title: 'The bar at the top follows you down the page',
+      body: 'It sticks to the top as you scroll and underlines whichever section you are currently in, so you always know where you are. Tap any label to jump. This is the fastest way back to something you skimmed past.',
+      frame: win('emu ai workshop',
+        '<div class="mk-nav"><em>Aug 19</em><span>Data rules</span><span>The method</span>' +
+        '<span class="on">Activity 1</span><span>Activity 2</span><span>Activity 3</span><span>What&rsquo;s next</span></div>' +
+        '<div class="mk-note">The underline moves on its own as you scroll.</div>') },
+
+    { title: 'Inside each activity, write your own prompt first',
+      body: 'Each activity walks you through five numbered moves. They are prompts for you, not prompts for the AI - questions to answer in your own words. Every move has a collapsed hint if you stall, and the first one has a full starter sentence you can lift.',
+      note: 'Doing it yourself is the difference between leaving with a script and leaving able to build the next one. The finished prompt is right there below - it will still be there in five minutes.',
+      frame: win('Activity 1 &middot; <b>Five moves</b>',
+        '<div class="mk-panels">' +
+        '<div class="mk-panel"><span class="mk-pin">1</span><b>Say what you want to happen</b></div>' +
+        '<div class="mk-panel"><span class="mk-pin">2</span><b>Describe the sheet like it cannot see your screen</b></div>' +
+        '<div class="mk-panel"><span class="mk-pin">3</span><b>Write every rule, including the do-nothing ones</b></div>' +
+        '<div class="mk-panel"><span class="mk-pin">4</span><b>Say what it must never do</b></div>' +
+        '<div class="mk-panel"><span class="mk-pin">5</span><b>Send it, then read the answer like an editor</b></div>' +
+        '</div>') },
+
+    { title: 'The grey bars are closed on purpose',
+      body: 'Each activity ends with a stack of collapsed panels: a prompt that works, the permission screens, troubleshooting, and the answer key. Nothing in them is required reading. They are closed so you try first and open only when you are stuck - or afterwards, to compare.',
+      note: 'Click the blue <b>+</b> to open one - it turns into a <b>&minus;</b> so you can close it again. Links elsewhere on the page that point into a panel will open it for you automatically, so &ldquo;the walkthrough is up in Activity 1&rdquo; actually takes you there.',
+      frame: win('Activity 1 &middot; the panels',
+        '<div class="mk-panels">' +
+        '<div class="mk-panel"><span class="tri">+</span><b>One that works</b><i>Open it if you stall</i></div>' +
+        '<div class="mk-panel"><span class="tri">+</span><b>The permission screen</b><i>When Google asks for access</i></div>' +
+        '<div class="mk-panel"><span class="tri">+</span><b>If nothing happens</b><i>Troubleshooting</i></div>' +
+        '<div class="mk-panel key"><span class="tri">+</span><b>What a correct script produces</b><i>Answer key</i></div>' +
+        '</div>') },
+
+    { title: 'Check yourself against the answer key, not against your gut',
+      body: 'Every activity ends with the exact result a correct run produces. That is the whole point of using invented data: you can count the right answer before you run anything, so you can tell working from broken. Output that looks tidy and is wrong is the failure mode this session is about.',
+      note: 'Two more things live at the bottom of the page: the workflow handout as a PDF, and a form to send back a workflow of your own that you would like help redesigning.',
+      frame: win('Answer key &middot; <b>Activity 1</b>',
+        '<table class="mk-grid">' +
+        '<tr><th>Outcome</th><th style="width:74px">How many</th><th>Who</th></tr>' +
+        '<tr><td>First reminder</td><td>2</td><td>Avery Nolan, Morgan Ellis</td></tr>' +
+        '<tr><td>Second reminder</td><td>2</td><td>Jordan Reyes, Priya Raman</td></tr>' +
+        '<tr><td>Needs a call</td><td>1</td><td>Sam Okonkwo</td></tr>' +
+        '<tr class="hi"><td>Skipped</td><td>3</td><td>Riley Chen, Devon Marsh, Kai Whitfield</td></tr>' +
+        '</table>' +
+        '<div class="mk-note">Three skipped, three different reasons.</div>') }
+    ]
+  };
+
+  /* ══════════════════════════════════════════════════════════
+     TOUR 2 - the Activity 1 path, end to end
+     ══════════════════════════════════════════════════════════ */
+  var ACT1 = {
+    kicker: 'Activity 1 &middot; the whole path',
+    steps: [
+
+    { title: 'Start by making your own copy of the sheet',
+      body: 'The yellow button opens Google&rsquo;s copy screen. Click <b>Make a copy</b> and the practice roster lands in your own Drive, already filled in with the ten people you will work on.',
+      note: 'Do not build a sheet yourself, and do not work in the original. The answer key at the bottom of the activity only matches this exact data.',
+      frame: win('docs.google.com/spreadsheets/&hellip;/<b>copy</b>',
+        '<div style="padding:17px 16px;background:#fff">' +
+        '<div style="font-size:14px;font-weight:700;color:#16202E;margin-bottom:6px">Copy document</div>' +
+        '<div style="color:#5D6E80;margin-bottom:15px">Would you like to make a copy of <b>Practice Roster - Completion Reminders</b>?</div>' +
+        '<div style="display:flex;gap:9px;justify-content:flex-end;align-items:center">' +
+        '<span class="mk-icon">Cancel</span>' +
+        '<span class="mk-icon mk-hl mk-blink" style="background:#0056B8;color:#fff;border-color:#0056B8">Make a copy</span>' +
+        '</div></div>') },
+
+    { title: 'Look at the sheet before you write a word',
+      body: 'One tab, called <b>Roster</b>. Seven columns. You are about to describe this to something that cannot see your screen, so notice the tab name, the column order, and what the values actually look like - <b>Status</b> and <b>Due date</b> are the two that decide everything.',
+      note: 'Column order matters more than it looks. Get it wrong and the script reads the wrong column - and the output still looks perfectly plausible.',
+      frame: win('Practice Roster &middot; <b>Roster</b>',
+        '<table class="mk-grid">' +
+        '<tr><th class="num"></th><th>Name</th><th>Email</th><th>Item needed</th><th>Status</th><th>Due date</th><th style="width:44px">Rem.</th><th>Last rem.</th></tr>' +
+        '<tr class="hi"><td class="num">2</td><td>Avery Nolan</td><td>avery.nolan@&hellip;</td><td>Immunization record</td><td>Not started</td><td>2026-08-01</td><td>0</td><td></td></tr>' +
+        '<tr><td class="num">3</td><td>Riley Chen</td><td>riley.chen@&hellip;</td><td>Advising form</td><td>Complete</td><td>2026-07-20</td><td>0</td><td></td></tr>' +
+        '<tr><td class="num">4</td><td>Jordan Reyes</td><td>jordan.reyes@&hellip;</td><td>Housing deposit</td><td>Started</td><td>2026-07-25</td><td>1</td><td>2026-08-01</td></tr>' +
+        '<tr><td class="num">5</td><td>Sam Okonkwo</td><td>sam.okonkwo@&hellip;</td><td>Transcript</td><td>Started</td><td>2026-07-14</td><td>2</td><td>2026-07-28</td></tr>' +
+        '</table>' +
+        '<div class="mk-note">Row 1 is headers. Ten people, five different situations.</div>') },
+
+    { title: 'Open Gemini in a new tab and describe the job',
+      body: 'Go to <b>gemini.google.com</b> and keep your sheet open beside it. Work through the five moves on the page: what you want to happen, what the sheet looks like, every rule including the two that say do nothing, and what it must never do.',
+      note: 'Aim for complete, not elegant. This is a first message, not a finished one - it will be wrong somewhere, and that is expected rather than a sign you wrote a bad prompt.',
+      frame: win('gemini.google.com',
+        '<div class="mk-chat">' +
+        '<div class="mk-msg you"><span class="who">You</span>' +
+        'I use a Google Sheet to track people who each need to complete a requirement. I want a Google Apps Script that decides who needs a reminder and writes the emails for me.<br><br>' +
+        'The sheet has one tab called Roster with these columns in this order: Name, Email, Item needed, Status, Due date, Reminders sent, Last reminder&hellip;</div>' +
+        '<div class="mk-input">Ask Gemini<span class="send"></span></div>' +
+        '</div>') },
+
+    { title: 'Two lines change the answer more than any wording trick',
+      body: 'Before you send it, make sure both of these are in there. <b>&ldquo;Create drafts, do not send anything&rdquo;</b> is the difference between a mistake and an incident. <b>&ldquo;Explain what each part does, I don&rsquo;t write code&rdquo;</b> changes what comes back more than anything else you could phrase cleverly.',
+      note: 'The full checklist is on the page under &ldquo;Before you send it&rdquo; - tab name and every column in order, one invented row, all five situations including the two that do nothing, drafts only, and who you are.',
+      frame: win('Before you send it',
+        '<div class="mk-panels">' +
+        '<div class="mk-panel"><span class="mk-box"></span><b>The tab name and every column, in order</b></div>' +
+        '<div class="mk-panel"><span class="mk-box"></span><b>One invented sample row</b></div>' +
+        '<div class="mk-panel"><span class="mk-box"></span><b>All five situations, including the two that do nothing</b></div>' +
+        '<div class="mk-panel key"><span class="mk-box"></span><b>&ldquo;Drafts only, do not send anything&rdquo;</b></div>' +
+        '<div class="mk-panel key"><span class="mk-box"></span><b>Something that tells it you do not write code</b></div>' +
+        '</div>') },
+
+    { title: 'Copy the code it hands back',
+      body: 'Gemini answers with a block of code and some explanation. Use the copy button on the code block itself rather than selecting by hand - a partial copy fails later in a way that looks like a completely different problem.',
+      note: 'Whatever prompt you sent, Gemini never saw a real person. Column names, one invented row, and your rules - and the code it wrote is about to run where your data already lives.',
+      frame: win('gemini.google.com',
+        '<div class="mk-chat">' +
+        '<div class="mk-msg"><span class="who">Gemini</span>Here is a Google Apps Script that does what you described. I have added comments explaining each section.</div>' +
+        '<div style="border:1px solid #DAE4EF;border-radius:7px;overflow:hidden">' +
+        '<div class="mk-row" style="background:#F1F5F9;font-size:10.5px;padding:5px 10px">Code.gs' +
+        '<span class="mk-icon mk-push mk-hl mk-blink">Copy</span></div>' +
+        '<div class="mk-code"><span class="c">// Adds the Reminders menu when the sheet opens</span>\nfunction <span class="k">onOpen</span>() {\n  SpreadsheetApp.getUi()\n    .createMenu(<span class="s">&#39;Reminders&#39;</span>)\n    .addItem(<span class="s">&#39;Run reminders&#39;</span>, <span class="s">&#39;runReminders&#39;</span>)\n    .addToUi();\n}</div>' +
+        '</div></div>') },
+
+    { title: 'In your sheet: Extensions &rsaquo; Apps Script',
+      body: 'Back in your copy of the sheet, open the <b>Extensions</b> menu in the menu bar and choose <b>Apps Script</b>. A new tab opens with a code editor in it. This is the part people scroll past looking for - it is in the menu bar, not in a sidebar.',
+      note: 'No Extensions menu? You are on a phone. It does not exist in the Sheets mobile app, and there is no workaround - pair up with someone who has a laptop.',
+      frame: win('Practice Roster &middot; <b>Roster</b>',
+        sheetsMenu('Extensions', 'mk-hl') +
+        '<div class="mk-dropwrap" style="padding-right:46px"><div class="mk-drop">' +
+        '<b class="on">Apps Script</b><b class="dim">Add-ons</b><b class="dim">Macros</b><b class="dim">AppSheet</b>' +
+        '</div></div>' +
+        '<div class="mk-note" style="margin-top:8px">The menu bar, not a sidebar.</div>') },
+
+    { title: 'Rename the project. This one matters later.',
+      body: 'The editor opens on <b>Untitled project</b>. Click that title and rename it <b>Reminder system</b>. It feels like housekeeping. It is not - you will see this exact name again on the Google permission screen in a moment, and recognising it there is what tells you the app asking for access to your Gmail is the one you just built.',
+      frame: win('script.google.com &middot; <b>Reminder system</b>',
+        '<div class="mk-row"><span class="mk-field mk-hl mk-blink">Reminder system</span>' +
+        '<span class="mk-icon mk-push">&#128190; Save</span><span class="mk-icon">&#9654; Run</span></div>' +
+        '<div class="mk-code empty">function myFunction() {\n\n}</div>' +
+        '<div class="mk-note">Rename it before you paste anything.</div>') },
+
+    { title: 'Delete everything, paste, save',
+      body: 'Select all of the placeholder <span style="font-family:ui-monospace,Menlo,monospace;font-size:.92em">myFunction</span> code that is already in the editor and delete it, then paste yours in its place. Save. Then run it - and Google will stop you with a permission screen.',
+      note: 'Everyone hits that screen and it looks alarming, because it asks for broad Gmail access. Nothing has gone wrong. Click <b>Review permissions</b> - not Cancel, which is drawn like the safe button - then check <b>every</b> box. A partial grant fails later in a way that looks like broken code. The full explanation is in &ldquo;The permission screen&rdquo; panel.',
+      frame: win('script.google.com &middot; <b>Reminder system</b>',
+        '<div class="mk-row"><span class="mk-field">Reminder system</span>' +
+        '<span class="mk-icon mk-push mk-hl mk-blink">&#128190; Save</span><span class="mk-icon">&#9654; Run</span></div>' +
+        '<div class="mk-code"><span class="c">// Adds the Reminders menu when the sheet opens</span>\nfunction <span class="k">onOpen</span>() {\n  SpreadsheetApp.getUi()\n    .createMenu(<span class="s">&#39;Reminders&#39;</span>)\n    .addItem(<span class="s">&#39;Run reminders&#39;</span>, <span class="s">&#39;runReminders&#39;</span>)\n    .addToUi();\n}\n\n<span class="c">// Walks every row and applies your five rules</span>\nfunction <span class="k">runReminders</span>() {</div>') },
+
+    { title: 'Go back to the sheet and reload the page',
+      body: 'This is the step that gets skipped. The new menu does not appear until the sheet is reloaded - saving in the editor is not enough. Reload, wait a second or two, and a <b>Reminders</b> menu appears in the menu bar next to Help.',
+      note: 'Still no menu after a reload? Check that you actually saved in the Apps Script editor. That is the cause almost every time.',
+      frame: win('Practice Roster &middot; <b>Roster</b>',
+        sheetsMenu('').replace('<span>Help</span>', '<span>Help</span><span class="new mk-hl mk-blink">Reminders</span>') +
+        '<div class="mk-dropwrap" style="padding-right:8px"><div class="mk-drop" style="width:150px">' +
+        '<b class="on">Run reminders</b></div></div>' +
+        '<div class="mk-note" style="margin-top:8px">Appears only after a reload.</div>') },
+
+    { title: 'Run it, then check the count before you trust it',
+      body: 'It finishes with a popup telling you what it did. Compare that against the answer key at the bottom of the activity: two first reminders, two second reminders, one person moved to a call, three skipped. Then open Gmail and read one of the drafts.',
+      note: 'If your numbers are close but not exact, that is the interesting case, not the failure case. Three people should be skipped for three different reasons - skip them for the wrong reasons and the run still looks like it worked. Tell Gemini what came out wrong in plain language and go again.',
+      frame: win('Practice Roster &middot; <b>Roster</b>',
+        sheetsMenu('').replace('<span>Help</span>', '<span>Help</span><span class="new">Reminders</span>') +
+        '<div class="mk-toast mk-hl"><p><b>Run complete</b></p>' +
+        '<p>First reminders drafted: <b>2</b></p><p>Second reminders drafted: <b>2</b></p>' +
+        '<p>Moved to Needs a call: <b>1</b></p><p>Skipped: <b>3</b></p>' +
+        '<p style="margin-top:6px;color:#7488A0">Drafts created in Gmail. Nothing was sent.</p></div>') }
+    ]
+  };
+
+  var TOURS = { orientation: ORIENT, activity1: ACT1 };
+
+  /* ══════════════════════════════════════════════════════════
+     ENGINE
+     ══════════════════════════════════════════════════════════ */
+  var launchers = document.querySelectorAll('[data-tour]');
+  if (!launchers.length) return;
+
+  var el = document.createElement('div');
+  el.id = 'tour';
+  el.hidden = true;
+  el.setAttribute('role', 'dialog');
+  el.setAttribute('aria-modal', 'true');
+  el.setAttribute('aria-label', 'Guided walkthrough');
+  el.innerHTML =
+    '<div class="tour-back" data-close></div>' +
+    '<div class="tour-modal">' +
+      '<div class="tour-head">' +
+        '<span class="tour-kicker" id="tourKicker"></span>' +
+        '<span class="tour-count" id="tourCount"></span>' +
+        '<button type="button" class="tour-x" data-close aria-label="Close walkthrough">&times;</button>' +
+      '</div>' +
+      '<div class="tour-body" id="tourBody">' +
+        '<div class="tour-stage" id="tourStage"></div>' +
+        '<div class="tour-copy" id="tourCopy"></div>' +
+      '</div>' +
+      '<div class="tour-foot">' +
+        '<div class="tour-dots" id="tourDots"></div>' +
+        '<div class="tour-nav">' +
+          '<button type="button" id="tourPrev">Back</button>' +
+          '<button type="button" class="tnext" id="tourNext">Next</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(el);
+
+  var stage = el.querySelector('#tourStage'),
+      copy  = el.querySelector('#tourCopy'),
+      dots  = el.querySelector('#tourDots'),
+      kick  = el.querySelector('#tourKicker'),
+      count = el.querySelector('#tourCount'),
+      prevB = el.querySelector('#tourPrev'),
+      nextB = el.querySelector('#tourNext'),
+      bodyW = el.querySelector('#tourBody');
+
+  var cur = null, idx = 0, lastFocus = null, scrollY = 0;
+
+  function render() {
+    var s = cur.steps[idx], i;
+    stage.innerHTML = s.frame;
+    var html = '<h3>' + s.title + '</h3><p>' + s.body + '</p>';
+    if (s.note) html += '<div class="tour-note"><p>' + s.note + '</p></div>';
+    copy.innerHTML = html;
+    count.textContent = 'Step ' + (idx + 1) + ' of ' + cur.steps.length;
+
+    dots.innerHTML = '';
+    for (i = 0; i < cur.steps.length; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Go to step ' + (i + 1));
+      if (i === idx) b.setAttribute('aria-current', 'true');
+      (function (n) { b.addEventListener('click', function () { idx = n; render(); }); })(i);
+      dots.appendChild(b);
+    }
+    prevB.disabled = (idx === 0);
+    nextB.textContent = (idx === cur.steps.length - 1) ? 'Done' : 'Next';
+    bodyW.scrollTop = 0;
+  }
+
+  function open(name) {
+    if (!TOURS[name]) return;
+    cur = TOURS[name]; idx = 0;
+    lastFocus = document.activeElement;
+    scrollY = window.scrollY || window.pageYOffset;
+    kick.innerHTML = cur.kicker;
+    el.hidden = false;
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    render();
+    nextB.focus();
+  }
+
+  function close() {
+    el.hidden = true;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function step(d) {
+    var n = idx + d;
+    if (n < 0) return;
+    if (n >= cur.steps.length) { close(); return; }
+    idx = n; render();
+  }
+
+  Array.prototype.forEach.call(launchers, function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      open(btn.getAttribute('data-tour'));
+    });
+  });
+  Array.prototype.forEach.call(el.querySelectorAll('[data-close]'), function (b) {
+    b.addEventListener('click', close);
+  });
+  prevB.addEventListener('click', function () { step(-1); });
+  nextB.addEventListener('click', function () { step(1); });
+
+  document.addEventListener('keydown', function (e) {
+    if (el.hidden) return;
+    if (e.key === 'Escape') { close(); }
+    else if (e.key === 'ArrowRight') { step(1); }
+    else if (e.key === 'ArrowLeft') { step(-1); }
+    else if (e.key === 'Tab') {
+      var f = el.querySelectorAll('button');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* swipe on touch */
+  var x0 = null;
+  bodyW.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  bodyW.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 55) step(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+
+})();
+
 </script>
 
 </body>
