@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EMU AI Workshop | Faculty and Staff Conference</title>
-<meta name="description" content="Everything from the EMU AI Workshop, Wednesday, August 19: the data rules, the workflow overview method, and three things to build with it.">
+<meta name="description" content="Everything from the EMU AI Workshop, Wednesday, August 19: the data rules, the workflow overview method, three things to build with it, and one to experiment with.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -181,7 +181,7 @@ section[id]{scroll-margin-top:62px}
 .truths .card p.ex b{font-style:normal;font-weight:700;color:var(--emu-blue)}
 
 /* ── hero activity map ─────────────────────────────────── */
-.actmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 0}
+.actmap{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:30px 0 0}
 @media(max-width:820px){.actmap{grid-template-columns:1fr}}
 .actcard{display:flex;flex-direction:column;gap:7px;padding:18px 20px 19px;border-radius:8px;text-decoration:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);transition:background .15s,border-color .15s,transform .15s}
 .actcard:hover{background:rgba(255,255,255,.19);border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
@@ -520,7 +520,7 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
 
 /* the mini page-map used by the orientation tour */
 .mk-page{padding:12px;background:#fff}
-.mk-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.mk-cards{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .mk-card{
   border:1px solid #DAE4EF;border-radius:5px;padding:8px 9px;background:#FAFCFE;
 }
@@ -589,7 +589,7 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
   <div class="hero" id="top">
     <div class="wrap">
       <h1>From a repetitive task to a working solution</h1>
-      <p class="lede">Everything from today lives here: what is safe to put into a public AI tool, the method, and three things to build with it. Free tools only. No AI ever sees a real person or a real EMU record.</p>
+      <p class="lede">Everything from today lives here: what is safe to put into a public AI tool, the method, three things to build with it, and one to experiment with. Free tools only.</p>
       <div class="actmap">
         <a class="actcard now" href="#activity-1">
           <span class="acthead"><span class="actnum">Activity 1</span><span class="actwhen now">Start here</span></span>
@@ -604,7 +604,12 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
         <a class="actcard" href="#activity-3">
           <span class="acthead"><span class="actnum">Activity 3</span><span class="actwhen">Then pick one</span></span>
           <span class="acttitle">A registration list into a caterer's numbers</span>
-          <span class="actneed">Laptop required &middot; the hardest of the three</span>
+          <span class="actneed">Laptop required &middot; the hardest of the four</span>
+        </a>
+        <a class="actcard" href="#activity-4">
+          <span class="acthead"><span class="actnum">Activity 4</span><span class="actwhen">Open experiment</span></span>
+          <span class="acttitle">Your team's documents, answering questions</span>
+          <span class="actneed">Laptop required &middot; nothing to build</span>
         </a>
       </div>
       <div style="margin:22px 0 0">
@@ -624,6 +629,7 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
     <a href="#activity-1">Activity 1</a>
     <a href="#activity-2">Activity 2</a>
     <a href="#activity-3">Activity 3</a>
+    <a href="#activity-4">Activity 4</a>
     <a href="#next">What's next</a>
   </div>
 </nav>
@@ -660,7 +666,8 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
       <div class="callout" style="margin-top:26px">
         <p><strong>The good news:</strong> nothing you build today needs to break that rule. You hand over the <em>shape</em> of your data - column names and one invented row - and it hands back instructions that run where your data already lives.</p>
       </div>
-      <p class="muted" style="margin-top:18px"><strong>The tool you are using decides which light you are on.</strong> Same prompt, different agreement behind it, different rules. This page assumes the free public version - the strictest case.</p>
+      <p class="muted" style="margin-top:18px"><strong>The tool you are using decides which light you are on.</strong> Same prompt, different agreement behind it, different rules. Activities 1, 2 and 3 assume the free public version - the strictest case.</p>
+      <p class="muted" style="margin-top:10px"><strong>Activity 4 is the one exception, and it is worth understanding why.</strong> Signed into your emu.edu account, Gemini Notebook runs under EMU&rsquo;s Workspace for Education agreement rather than the public terms, so internal working documents are allowed there. The rule did not change - <a href="#activity-4">the container did</a>. Check the top right corner and you will know which one you are in.</p>
     </div>
   </section>
 
@@ -1104,7 +1111,7 @@ Here are the notes:</pre>
       <h3 class="stepshead">Write the prompt</h3>
 
       <div class="builder">
-        <h4>The hardest of the three, and the most like real work</h4>
+        <h4>The hardest of the three builds, and the most like real work</h4>
         <p class="builderintro">You have the rules in plain English above. That is the situation you are in at your desk: you know your job and have to explain it to something that does not.</p>
         <ol class="bsteps">
           <li>
@@ -1253,7 +1260,74 @@ Important requirements:
     </div>
   </section>
 
-  <section class="band band-soft" id="next">
+  <section class="band band-soft" id="activity-4">
+    <div class="wrap">
+      <div class="actbanner">
+        <p class="actlabel">Activity 4</p>
+        <span class="chip quiet">Laptop required</span>
+      </div>
+      <h2 class="actbig">Give your team&rsquo;s documents somewhere to answer questions</h2>
+      <p class="lede">The first three activities build something. <strong>This one is an experiment.</strong> Open a tool, point it at documents your team already uses, and find out what becomes possible.</p>
+      <p>Gemini Notebook - you may know it as NotebookLM - reads a set of documents you hand it and answers only from those, with a citation for every claim. There is no prompt to write, no script to run and nothing to install. Ten minutes here is enough to know whether it is worth an hour later.</p>
+      <p class="muted">Try three things off the list, ignore the rest, and pay attention to what occurs to you along the way. That last part is the actual assignment.</p>
+
+      <div class="callout" style="margin-top:26px">
+        <p><strong>Check the top right corner before you upload anything.</strong> Signed in with your <strong>emu.edu</strong> account, this runs under EMU&rsquo;s Google Workspace for Education agreement: your files are not read by humans and are not used to train anything. Signed in with a personal Gmail, it is an ordinary public tool and the red rule applies in full.</p>
+        <p style="margin-top:10px">Same page, same buttons, entirely different agreement behind them. If that corner does not say emu.edu, stop and fix it before you go any further.</p>
+      </div>
+
+      <h3 class="stepshead">Getting in</h3>
+      <ol class="steps" style="margin-top:14px">
+        <li>Go to <strong>notebooklm.google.com</strong> and sign in with your emu.edu account. Check the corner.</li>
+        <li>Create a new notebook and add three to five documents. If your files are in Drive, the picker pulls them straight in. Otherwise drag them from your desktop.</li>
+        <li>Ask it something.</li>
+      </ol>
+
+      <h3 class="stepshead">What to put in it</h3>
+      <p>Three to five things your team refers to but nobody can ever find. Process documentation, onboarding material, meeting notes from the past year, a style guide, last year&rsquo;s report, the FAQ somebody made once and saved somewhere.</p>
+      <p class="muted"><strong>Being inside EMU&rsquo;s agreement is not the same as being the right person to handle something.</strong> Personnel files, student records and anything you would not forward to a colleague in another department still stay out. A safer container does not change whose job it is.</p>
+
+      <h3 class="stepshead">Things to try</h3>
+      <ul class="plain">
+        <li><strong>Generate an Audio Overview - start this one first.</strong> It takes a few minutes to build, so kick it off and go do something else while it works. Two AI voices discussing your onboarding doc is strange, but it can be a surprisingly useful thing to hear.</li>
+        <li><strong>Ask it something you already know the answer to.</strong> If it gets that wrong you have learned something before you trusted it with anything.</li>
+        <li><strong>Ask something you would normally hunt through three documents for.</strong></li>
+        <li><strong>Ask what these documents do not say.</strong> The gaps are usually more interesting than the answers.</li>
+        <li><strong>Ask where two of them contradict each other.</strong> Most teams have at least one pair that does.</li>
+        <li><strong>Ask what a new hire would find most confusing.</strong></li>
+        <li><strong>Ask for a mind map</strong> of how it all fits together.</li>
+        <li><strong>Ask it to draft an FAQ</strong> your team could actually use.</li>
+      </ul>
+
+      <div class="selfcheck">
+        <p class="schead">Before you trust it</p>
+        <ul>
+          <li>The first thing you asked was something you already knew the answer to</li>
+          <li>You clicked a citation and read the source it came from</li>
+          <li>You looked at the <em>date</em> on that source - a confident answer from a document nobody has updated since 2018 is still an answer from 2018</li>
+          <li>If it offered to search the web, you noticed. That is the moment it stops being grounded in your documents and you may not be told twice</li>
+          <li>Nothing you uploaded belongs to somebody else&rsquo;s job</li>
+        </ul>
+      </div>
+
+      <h3 class="stepshead">Possibilities worth thinking about</h3>
+      <p>Not instructions. Just the shapes this tends to take once people start using it.</p>
+      <div class="grid">
+        <div class="card"><h3>A notebook for your student workers</h3><p>Everything they need to know, answering questions at 9pm on a Sunday when you are not there.</p></div>
+        <div class="card"><h3>Onboarding that does not depend on you</h3><p>The next hire asks the documents instead of interrupting the person who already knows.</p></div>
+        <div class="card"><h3>&ldquo;Who do I ask about this?&rdquo;</h3><p>The question your team asks most, and the one that costs the most time to answer.</p></div>
+        <div class="card"><h3>An audit of your own documentation</h3><p>Ask it what contradicts what, and what is missing. It is unusually good at this and it takes about a minute.</p></div>
+        <div class="card"><h3>A committee&rsquo;s institutional memory</h3><p>Three years of minutes, and a way to ask what was decided about something and when.</p></div>
+        <div class="card"><h3>Anything you explain more than twice</h3><p>If you have answered the same question this month more than once, that is the notebook.</p></div>
+      </div>
+
+      <div class="btn-row" style="margin-top:26px">
+        <a class="btn btn-yellow" id="formLinkAct4" href="#">Submit the one you just thought of</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-white" id="next">
     <div class="wrap">
       <p class="section-header">Take these with you</p>
       <h2>Three things</h2>
@@ -1261,7 +1335,8 @@ Important requirements:
       <ol class="takeaways">
         <li>
           <h3>Send the shape, not the record</h3>
-          <p>The AI never saw a real person or a real number today. It got column names, invented rows and rules - and the code it wrote ran in your Drive, where the data already lived. Before you paste anything at your desk, ask the one question: <strong>is this green?</strong></p>
+          <p>In the first three activities the AI never saw a real person or a real number. It got column names, invented rows and rules - and the code it wrote ran in your Drive, where the data already lived. Before you paste anything into a public tool at your desk, ask the one question: <strong>is this green?</strong></p>
+          <p class="tksub">Activity 4 is the exception that proves it: the same document is fine in one account and not in another. Check the corner, every time.</p>
         </li>
         <li>
           <h3>The method is the part that transfers</h3>
@@ -1319,6 +1394,7 @@ const CONFIG = {
   apply("sheetLink",    CONFIG.sheetCopyLink);
   apply("regSheetLink", CONFIG.regSheetCopyLink);
   apply("formLink",     CONFIG.intakeFormLink);
+  apply("formLinkAct4", CONFIG.intakeFormLink);
   apply("handoutLink",     CONFIG.handoutPdf);
   apply("handoutLinkFoot", CONFIG.handoutPdf);
   if (unset.length) document.getElementById("setupFlag").style.display = "block";
@@ -1421,13 +1497,14 @@ const CONFIG = {
     steps: [
 
     { title: 'Everyone starts in the same place',
-      body: 'Activity 1 is the one the whole room builds together, so start there even if another one sounds more like your job. Activities 2 and 3 are a pick-one after that - you are not expected to finish all three.',
-      note: 'Activity 2 is the only one that works on a phone. Activities 1 and 3 need a laptop, because the Extensions menu does not exist in the Sheets mobile app. If you came without one, pair up.',
+      body: 'Activity 1 is the one the whole room builds together, so start there even if another one sounds more like your job. Activities 2, 3 and 4 are a pick-one after that - you are not expected to finish all four.',
+      note: 'Activity 2 is the only one that works on a phone. Activities 1, 3 and 4 need a laptop. If you came without one, pair up.',
       frame: win('EMU AI Workshop',
         '<div class="mk-page"><div class="mk-cards">' +
         '<div class="mk-card on"><u>Activity 1 &middot; start here</u><b>A reminder system from a spreadsheet</b><i>Laptop required</i></div>' +
         '<div class="mk-card"><u>Activity 2</u><b>Messy meeting notes into who owes what</b><i>Works on a phone</i></div>' +
         '<div class="mk-card"><u>Activity 3</u><b>A registration list into meal counts</b><i>Laptop &middot; the hardest</i></div>' +
+        '<div class="mk-card"><u>Activity 4</u><b>Your team&rsquo;s documents, answering questions</b><i>Laptop &middot; nothing to build</i></div>' +
         '</div></div>') },
 
     { title: 'Read the traffic lights before you type anything',
@@ -1444,7 +1521,7 @@ const CONFIG = {
       body: 'It sticks to the top as you scroll and underlines whichever section you are currently in, so you always know where you are. Tap any label to jump. This is the fastest way back to something you skimmed past.',
       frame: win('emu ai workshop',
         '<div class="mk-nav"><em>Aug 19</em><span>Data rules</span><span>The method</span>' +
-        '<span class="on">Activity 1</span><span>Activity 2</span><span>Activity 3</span><span>What&rsquo;s next</span></div>' +
+        '<span class="on">Activity 1</span><span>Activity 2</span><span>Activity 3</span><span>Activity 4</span><span>What&rsquo;s next</span></div>' +
         '<div class="mk-note">The underline moves on its own as you scroll.</div>') },
 
     { title: 'Inside each activity, write your own prompt first',
@@ -1471,7 +1548,7 @@ const CONFIG = {
         '</div>') },
 
     { title: 'Check yourself against the answer key, not against your gut',
-      body: 'Every activity ends with the exact result a correct run produces. That is the whole point of using invented data: you can count the right answer before you run anything, so you can tell working from broken. Output that looks tidy and is wrong is the failure mode this session is about.',
+      body: 'Activities 1, 2 and 3 each end with the exact result a correct run produces. That is the whole point of using invented data: you can count the right answer before you run anything, so you can tell working from broken. Output that looks tidy and is wrong is the failure mode this session is about. Activity 4 has no key - there, the check is to ask it something you already know.',
       note: 'Two more things live at the bottom of the page: the workflow handout as a PDF, and a form to send back a workflow of your own that you would like help redesigning.',
       frame: win('Answer key &middot; <b>Activity 1</b>',
         '<table class="mk-grid">' +
