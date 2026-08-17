@@ -91,6 +91,18 @@ ul.plain li{margin-bottom:9px}
 
 /* ── callouts ──────────────────────────────────────── */
 .callout{background:#fff;border-left:4px solid var(--emu-blue);padding:20px 24px;margin:0 0 18px;border-radius:0 6px 6px 0;box-shadow:0 1px 3px rgba(16,44,82,.06)}
+.directive{background:var(--emu-blue-mid);color:#fff;border-radius:9px;padding:30px 34px 32px;margin:30px 0 0;box-shadow:0 3px 12px rgba(16,44,82,.14)}
+.directive .dhead{font-family:var(--font-sans);font-weight:700;font-size:1.62rem;line-height:1.22;letter-spacing:-.01em;color:#fff;margin:0 0 14px}
+.directive .dhead em{font-style:normal;color:var(--emu-yellow)}
+.directive p{color:#fff;font-size:1.02rem;line-height:1.62;margin:0 0 12px;opacity:.93}
+.directive p:last-child{margin-bottom:0}
+.directive strong{color:#fff}
+.dsplit{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:20px 0 18px;padding:20px 0 4px;border-top:1px solid rgba(255,255,255,.2)}
+@media(max-width:760px){.dsplit{grid-template-columns:1fr;gap:18px}}
+.dsplit p{font-size:.95rem;line-height:1.58;margin:0;opacity:.88}
+.dtag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:20px;padding:4px 12px;margin:0 0 9px;background:var(--emu-yellow);color:#3A2600}
+.dtag.go{background:#127A43;color:#fff}
+@media(max-width:760px){.directive{padding:24px 22px 26px}.directive .dhead{font-size:1.34rem}}
 .callout p:last-child,.callout ul:last-child{margin-bottom:0}
 .callout.warn{border-left-color:var(--emu-yellow)}
 .band-white .callout{background:var(--emu-blue-light);box-shadow:none}
@@ -589,7 +601,7 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
   <div class="hero" id="top">
     <div class="wrap">
       <h1>From a repetitive task to a working solution</h1>
-      <p class="lede">Everything from today lives here: what is safe to put into a public AI tool, the method, three things to build with it, and one to experiment with. Free tools only.</p>
+      <p class="lede">Everything from today lives here: what is safe to put into an AI tool, the method, three things to build with it, and one to experiment with. No paid license needed.</p>
       <div class="actmap">
         <a class="actcard now" href="#activity-1">
           <span class="acthead"><span class="actnum">Activity 1</span><span class="actwhen now">Start here</span></span>
@@ -640,7 +652,8 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
     <div class="wrap">
       <p class="section-header">Read this first</p>
       <h2>What goes in the box</h2>
-      <p class="lede">Every tool on this page is public, which means whatever you type into it leaves EMU.</p>
+      <p class="lede">Always start with the strictest (red) version of the rule. Then check which tool you are actually in, because that is the thing that may move you toward yellow/green.</p>
+      <p><strong>The colors describe the data you are about to hand over</strong> - not the tool, and not the task. Look at what is in your clipboard and decide which of these three it is. Everything else on this page follows from that one call.</p>
       <div class="lights">
         <div class="light green">
           <p class="lname">Green &middot; go ahead</p>
@@ -666,8 +679,34 @@ details.panel.key summary:before{background:var(--emu-yellow);color:#3A2600}
       <div class="callout" style="margin-top:26px">
         <p><strong>The good news:</strong> nothing you build today needs to break that rule. You hand over the <em>shape</em> of your data - column names and one invented row - and it hands back instructions that run where your data already lives.</p>
       </div>
-      <p class="muted" style="margin-top:18px"><strong>The tool you are using decides which light you are on.</strong> Same prompt, different agreement behind it, different rules. Activities 1, 2 and 3 assume the free public version - the strictest case.</p>
-      <p class="muted" style="margin-top:10px"><strong>Activity 4 is the one exception, and it is worth understanding why.</strong> Signed into your emu.edu account, Gemini Notebook runs under EMU&rsquo;s Workspace for Education agreement rather than the public terms, so internal working documents are allowed there. The rule did not change - <a href="#activity-4">the container did</a>. Check the top right corner and you will know which one you are in.</p>
+      <h3 class="stepshead" style="margin-top:32px">Then check the top right corner</h3>
+      <p><strong>The account you are signed into decides which rule you are on.</strong> Personal AI accounts do not have enterprise agreements behind them, and therefore are not compliant with the data safety principles we utilize here at EMU.</p>
+      <div class="grid" style="margin-top:18px">
+        <div class="card">
+          <h3>Signed in as emu.edu</h3>
+          <p>Gemini is a <strong>core service</strong> in EMU&rsquo;s Google Workspace for Education - the same agreement that covers Gmail, Calendar and Drive. What you type is not used to train models. You do not need a paid license for this: the protection is on every EMU account, and the paid licenses only add integration into the Workspace apps.</p>
+        </div>
+        <div class="card">
+          <h3>Signed in as anything else</h3>
+          <p>A personal Gmail, or any AI tool EMU has no agreement with. Ordinary public terms, whatever you type leaves EMU, and the red rule above applies in full.</p>
+        </div>
+      </div>
+      <div class="directive">
+        <p class="dhead">Sensitive EMU work goes in <em>Gemini</em> - if anywhere at all.</p>
+        <p>Signed into your emu.edu account, it is the only AI tool EMU holds an agreement with. That agreement is what makes the sensitive half <em>possible</em>. It is not what makes it <em>fine</em>.</p>
+        <div class="dsplit">
+          <div>
+            <span class="dtag go">Green data</span>
+            <p>Any tool you like. Sharpening your own writing, something already public, thinking out loud about a project with no real people and no real numbers in it - this rule is not aimed at that.</p>
+          </div>
+          <div>
+            <span class="dtag">Yellow or red data</span>
+            <p>Use Gemini, signed in with your @emu.edu account. No other tools should receive this type of data about EMU. ChatGPT, Copilot, Claude and whatever is built into the app you opened this morning have no EMU agreement behind them.</p>
+            <p style="margin-top:9px"><strong>And it is still yellow in there.</strong> Signing in with emu.edu means you <em>may</em>. It never means you <em>should</em>, and it never turns anything green. Think first, every time.</p>
+          </div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">Everything you build today still assumes the strict version, on purpose.</p>
     </div>
   </section>
 
@@ -1272,8 +1311,8 @@ Important requirements:
       <p class="muted">Try three things off the list, ignore the rest, and pay attention to what occurs to you along the way. That last part is the actual assignment.</p>
 
       <div class="callout" style="margin-top:26px">
-        <p><strong>Check the top right corner before you upload anything.</strong> Signed in with your <strong>emu.edu</strong> account, this runs under EMU&rsquo;s Google Workspace for Education agreement: your files are not read by humans and are not used to train anything. Signed in with a personal Gmail, it is an ordinary public tool and the red rule applies in full.</p>
-        <p style="margin-top:10px">Same page, same buttons, entirely different agreement behind them. If that corner does not say emu.edu, stop and fix it before you go any further.</p>
+        <p><strong>Check the top right corner before you upload anything.</strong> Same rule as <a href="#data-rule">the top of this page</a> - but this is where it actually bites. It is the one activity where you hand over your own documents instead of a made-up example.</p>
+        <p style="margin-top:10px">If that corner does not say <strong>emu.edu</strong>, stop and fix it before you go any further.</p>
       </div>
 
       <h3 class="stepshead">Getting in</h3>
@@ -1335,8 +1374,8 @@ Important requirements:
       <ol class="takeaways">
         <li>
           <h3>Send the shape, not the record</h3>
-          <p>In the first three activities the AI never saw a real person or a real number. It got column names, invented rows and rules - and the code it wrote ran in your Drive, where the data already lived. Before you paste anything into a public tool at your desk, ask the one question: <strong>is this green?</strong></p>
-          <p class="tksub">Activity 4 is the exception that proves it: the same document is fine in one account and not in another. Check the corner, every time.</p>
+          <p>In the first three activities the AI never saw a real person or a real number. It got column names, invented rows and rules - and the code it wrote ran in your Drive, where the data already lived. That is worth doing even where you are allowed to do otherwise, because it is the version that keeps working in tools EMU has no agreement with.</p>
+          <p class="tksub">Two questions before you paste anything, anywhere: <strong>which corner am I in</strong>, and <strong>is this mine to hand over?</strong></p>
         </li>
         <li>
           <h3>The method is the part that transfers</h3>
@@ -1508,7 +1547,7 @@ const CONFIG = {
         '</div></div>') },
 
     { title: 'Read the traffic lights before you type anything',
-      body: 'Every tool used today is the free, public version, which means whatever you type into it leaves EMU. The section at the top of the page sorts what you might paste into three buckets. It is short. Read it once and the rest of the day is easy.',
+      body: 'The section at the top of the page sorts what you might paste into three buckets, then tells you the one thing that moves them: which account you are signed into. It is short. Read it once and the rest of the day is easy.',
       note: 'Nothing you build today needs to break the red rule. You hand over the shape of your data - column names and one invented row - and it hands back instructions that run where your real data already lives.',
       frame: win('What goes in the box',
         '<div class="mk-lights">' +
